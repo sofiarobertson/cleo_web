@@ -1,0 +1,131 @@
+[project]
+name = "cleo_web"
+version = "0.1.0"
+description = "Proof of concept for web-based CLEO"
+authors = [
+    {name = "Sofia Robertson", email = "noreply@nrao.edu"},
+    {name = "Thomas Chamberlin", email = "tchamber@nrao.edu"},
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "django",
+    "django_environ",
+    "zmqgc>=22.1",
+    "data_pub>=22.1",
+]
+
+packages = ["cleo_web", "devex"]
+
+[project.optional-dependencies]
+dev = [
+    "django_extensions",
+    "django_debug_toolbar",
+]
+
+[tool.black]
+preview = true
+line-length = 120
+
+[tool.ruff]
+select = [
+  "F",    # https://docs.astral.sh/docs/rules/#pyflakes-f
+  "E",    # https://docs.astral.sh/docs/rules/#error-e
+  "W",    # https://docs.astral.sh/docs/rules/#warning-w
+  "B",    # https://docs.astral.sh/docs/rules/#flake8-bugbear-b
+  "I",    # https://docs.astral.sh/docs/rules/#isort-i
+  "NPY",  # https://docs.astral.sh/docs/rules/#numpy-specific-rules-npy
+  "PD",   # https://docs.astral.sh/docs/rules/#pandas-vet-pd
+  "RUF",  # https://docs.astral.sh/docs/rules/#ruff-specific-rules-ruf
+  "T100",  #https://docs.astral.sh/ruff/rules/debugger/
+]
+fixable = ["ALL"]
+unfixable = ["B"]
+ignore = [
+  "A",  # https://docs.astral.sh/ruff/rules/#flake8-builtins-a
+  "ANN",  # https://docs.astral.sh/ruff/rules/#flake8-annotations-ann
+  "ARG",  # https://docs.astral.sh/ruff/rules/#flake8-unused-arguments-arg
+  "BLE001",  # https://docs.astral.sh/ruff/rules/#flake8-blind-except-ble
+  "C901",  # https://docs.astral.sh/ruff/rules/complex-structure/
+  "D",  # https://docs.astral.sh/ruff/rules/#pydocstyle-d
+  "DJ",  # https://docs.astral.sh/ruff/rules/#flake8-django-dj
+  "DTZ",  # https://docs.astral.sh/ruff/rules/#flake8-datetimez-dtz
+  "E741",  # https://docs.astral.sh/ruff/rules/ambiguous-variable-name/
+  "EM",  # https://docs.astral.sh/ruff/rules/#flake8-errmsg-em
+  "ERA001",  # https://docs.astral.sh/ruff/rules/commented-out-code/
+  "FBT",  # https://docs.astral.sh/ruff/rules/#flake8-boolean-trap-fbt
+  "FIX",  # https://docs.astral.sh/ruff/rules/#flake8-fixme-fix
+  "G004",  # https://docs.astral.sh/ruff/rules/logging-f-string/
+  "INP001",  # https://beta.ruff.rs/docs/rules/#flake8-no-pep420: Checks for packages that are missing __init__.py
+  "N",  # https://beta.ruff.rs/docs/rules/#pep8-naming: various rules for variable/class/etc. names
+  "PD901",  # https://docs.astral.sh/ruff/rules/#pandas-vet-pd: df is a bad variable name
+  "PERF",  # https://beta.ruff.rs/docs/rules/#perflint: detects various performance anti-patterns
+  "PLR",  # https://beta.ruff.rs/docs/rules/#pylint
+  "PLW",  # https://beta.ruff.rs/docs/rules/#pylint
+  "PT",  # https://docs.astral.sh/ruff/rules/#flake8-pytest-style-pt
+  "PTH",  # flake8-use-pathlib: Use pathlib instead of os.path
+  "PYI",  # https://docs.astral.sh/ruff/rules/#flake8-pyi-pyi
+  "RET",  # https://docs.astral.sh/ruff/rules/#flake8-return-ret
+  "RUF012",  # https://docs.astral.sh/ruff/rules/mutable-class-default/
+  "S",  # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
+  "SIM",  # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+  "SLF",  # https://docs.astral.sh/ruff/rules/#flake8-self-slf
+  "T20",  # https://docs.astral.sh/ruff/rules/#flake8-print-t20
+  "TD",  # https://docs.astral.sh/ruff/rules/#flake8-todos-td
+  "TRY003",  # https://docs.astral.sh/ruff/rules/raise-vanilla-args/
+  "TRY301",  # https://docs.astral.sh/ruff/rules/raise-within-try/
+  "W191",  # https://docs.astral.sh/ruff/rules/tab-indentation/
+  "E501", # https://docs.astral.sh/ruff/rules/line-too-long/  # TODO: would be nice to check long comments...
+]
+extend-exclude = ["toys", "alda/utils/mjd.py"]
+line-length = 120
+
+# https://docs.astral.sh/ruff/settings/#isort
+[tool.ruff.isort]
+combine-as-imports = true
+section-order = ["future", "standard-library", "third-party", "django", "djangolibs", "gbo", "first-party", "local-folder"]
+
+[tool.ruff.isort.sections]
+# Django itself
+django = ["django"]
+# Group for all django-related packages. This must be updated when adding items to INSTALLED_APPS
+djangolibs = [
+    "crispy_bootstrap4",
+    "crispy_forms",
+    "dal",
+    "dal_select2",
+    "debug_toolbar",
+    "django_cas_ng",
+    "django_celery_results",
+    "django_environ",
+    "django_extensions",
+    "django_filters",
+    "django_require_login",
+    "django_stronghold",
+    "django_tables2",
+    "pgtrigger",
+    "watson",
+]
+# Group for all GBO/NRAO-maintained modules
+gbo = [
+    "turtle_orm",
+    "nell",
+    "scheduler",
+    "users",
+    "calculator",
+    "pht",
+    "obscom",
+    "ops",
+    "gbt_archive",
+    "tortoise",
+    "pyat",
+    "pycapo",
+]
+
+[tool.pyright]
+reportImplicitStringConcatenation = false
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

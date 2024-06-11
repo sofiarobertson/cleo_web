@@ -1,0 +1,18 @@
+{% load static %}
+
+<h1>Device Explorer</h1>
+
+<h2>Available Managers</h2>
+<ul>
+    {% for manager in available_managers %}
+    <li>{{ manager }}</li>
+    {% endfor %}
+</ul>
+
+
+<h2>Selected Manager: {{selected_manager}}</h2>
+<ul>
+    {% for param, value in selected_manager_params.items %}
+    <li>{{ param }}</li>
+    {% endfor %}
+</ul>
