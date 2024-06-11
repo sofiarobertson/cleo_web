@@ -5,18 +5,29 @@
 
 <h1>Device Explorer</h1>
 
-<h2>Available Managers</h2>
-<ul>
-    {% for manager in available_managers %}
-    <li>{{ manager }}</li>
-    {% endfor %}
-</ul>
+<fieldset>
 
+<div class ="row ">
+    <div class = "col border">
+        <legend><h2>Available Managers</h2></legend>
+        
+            {% for manager in available_managers %}
+            <p>{{ manager }}</p>
+            {% endfor %}
+    
+    </div>
+        
+    <div class = "col border ">
+        <h2>Selected Manager: {{selected_manager}}</h2>
+        
+            {% for param, value in selected_manager_params.items %}
+            <p>{{ param }}</p>
+            {% endfor %}
 
-<h2>Selected Manager: {{selected_manager}}</h2>
-<ul>
-    {% for param, value in selected_manager_params.items %}
-    <li>{{ param }}</li>
-    {% endfor %}
-</ul>
+    </div>
+
+</div>
+
+</fieldset>
+
 {% endblock %}
