@@ -1,3 +1,6 @@
+{% extends "devex/base.html" %}
+
+{% block content %}
 {% load static %}
 
 <h1>Device Explorer</h1>
@@ -16,3 +19,4 @@
     <li>{{ param }}</li>
     {% endfor %}
 </ul>
+{% endblock %}
