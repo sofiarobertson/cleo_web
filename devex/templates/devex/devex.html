@@ -8,19 +8,21 @@
 <fieldset>
 
 <div class ="row ">
-    <div class = "col border">
-        <legend><h2>Available Managers</h2></legend>
-        
+    <div class = "col-md-auto border">
+        <legend><h2 class="fw-bold">Available Managers</h2></legend>
+              
             {% for manager in available_managers %}
-            <p><a href="?manager={{ manager }}">{{ manager }}</a>
+            <p {% if manager == selected_manager %} class="bg-primary-subtle" {% endif %}>
+            <a href="?manager={{ manager }}">{{ manager }} </a>
                 
             </p>
             {% endfor %}
     
     </div>
         
-    <div class = "col border ">
-        <h2>Selected Manager: {{selected_manager}}</h2>
+    <div class = "col-md-auto border ">
+        <h2 class="fw-bold">Selected Manager: </h2>
+            <h4 class="fw-bold">{{selected_manager}}</h4>
         
             {% for param, value in selected_manager_params.items %}
             <p>{{ param }}</p>
