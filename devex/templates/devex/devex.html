@@ -8,27 +8,43 @@
 <fieldset>
 
 <div class ="row ">
-    <div class = "col-md-auto border">
+    <div class = "col-lg-4 border">
         <legend><h2 class="fw-bold">Available Managers</h2></legend>
               
             {% for manager in available_managers %}
             <p {% if manager == selected_manager %} class="bg-primary-subtle" {% endif %}>
-            <a href="?manager={{ manager }}">{{ manager }} </a>
+            <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
                 
             </p>
             {% endfor %}
     
     </div>
         
-    <div class = "col-md-auto border ">
-        <h2 class="fw-bold">Selected Manager: </h2>
-            <h4 class="fw-bold">{{selected_manager}}</h4>
+    <div class = "col-lg-4 border ">
+        <h2 class="fw-bold">Parameters: </h2>
+            <h5 class="fw-bold">Selected Manager: </h5>
+            <h5 class="fw-bold">{{selected_manager}}</h5>
         
-            {% for param, value in selected_manager_params.items %}
-            <p>{{ param }}</p>
+            {% for param, param_info in selected_manager_params.items %}
+            <p {% if param == selected_param %} class="bg-primary-subtle" {% endif %}>
+                <a href="?manager={{ selected_manager }}&param={{ param }}" class="text-decoration-none text-dark">{{ param }} </a>
+                    
+                </p>
             {% endfor %}
 
     </div>
+
+    <div class = "col-lg-4 border ">
+        <h2 class="fw-bold">Parameter Fields: </h2>
+            <h5 class="fw-bold">Selected Parameter: </h5>
+            <h5 class="fw-bold">{{ selected_param }}</h5>
+            <pre>
+                {{selected_param_info|default:"No selected param"|linebreaks}}
+
+            </pre>
+
+    </div>
+
 
 </div>
 
