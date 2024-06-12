@@ -12,7 +12,9 @@
         <legend><h2>Available Managers</h2></legend>
         
             {% for manager in available_managers %}
-            <p>{{ manager }}</p>
+            <p><a href="?manager={{ manager }}">{{ manager }}</a>
+                
+            </p>
             {% endfor %}
     
     </div>

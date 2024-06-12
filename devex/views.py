@@ -8,8 +8,9 @@ from django.conf import settings
 def devex(request: HttpRequest):
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
     available_managers = cc.show_managers()
+    
 
-    selected_manager = "ScanCoordinator.ScanCoordinator"
+    selected_manager = request.GET.get("manager", None)
 
     selected_manager_params = {}
     try:
