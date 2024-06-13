@@ -26,8 +26,14 @@ def devex(request: HttpRequest):
     selected_param = request.GET.get("param", None)
     selected_param_info = selected_manager_params[selected_param][selected_param] if selected_param else None
     fields_to_ignore = ["name", "description", "fitsname", "type"]
-    selected_param_info = {k: v for k, v in selected_param_info.items() if k not in fields_to_ignore}
+    selected_param_info = {k: v for k, v in selected_param_info.items() if k not in fields_to_ignore} if selected_param_info else None
     
+
+
+    selected_field = request.GET.get("field", None)
+    selected_field_info = selected_param_info.get(selected_field, None) if selected_param_info else None
+
+    print(f"{selected_field=}")
     return render(
         request,
         "devex/devex.html",
@@ -36,6 +42,8 @@ def devex(request: HttpRequest):
             "selected_manager_params": selected_manager_params,
             "selected_manager": selected_manager,
             "selected_param": selected_param,
-            "selected_param_info": pformat(selected_param_info),
+            "selected_param_info": selected_param_info,
+            "selected_field": selected_field,
+            "selected_field_info": selected_field_info
         },
     )

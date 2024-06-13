@@ -1,47 +1,72 @@
 {% extends "devex/base.html" %}
 
 {% block content %}
-{% load static %}
 
 <h1>Device Explorer</h1>
 
 <fieldset>
 
+
+<!-- Avalabie managers -->
 <div class ="row ">
     <div class = "col-lg-4 border">
         <legend><h2 class="fw-bold">Available Managers</h2></legend>
               
             {% for manager in available_managers %}
-            <p {% if manager == selected_manager %} class="bg-primary-subtle" {% endif %}>
+            <ul {% if manager == selected_manager %} class="bg-primary-subtle" {% endif %}>
             <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
                 
-            </p>
+            </ul>
             {% endfor %}
     
     </div>
         
+
+
+<!-- Parameters -->
     <div class = "col-lg-4 border ">
         <h2 class="fw-bold">Parameters: </h2>
             <h5 class="fw-bold">Selected Manager: </h5>
             <h5 class="fw-bold">{{selected_manager}}</h5>
         
             {% for param, param_info in selected_manager_params.items %}
-            <p {% if param == selected_param %} class="bg-primary-subtle" {% endif %}>
+            <ul {% if param == selected_param %} class="bg-primary-subtle" {% endif %}>
                 <a href="?manager={{ selected_manager }}&param={{ param }}" class="text-decoration-none text-dark">{{ param }} </a>
                     
-                </p>
+                </ul>
             {% endfor %}
 
     </div>
 
+
+<!-- Parameter Fields -->
     <div class = "col-lg-4 border ">
         <h2 class="fw-bold">Parameter Fields: </h2>
             <h5 class="fw-bold">Selected Parameter: </h5>
             <h5 class="fw-bold">{{ selected_param }}</h5>
-            <pre>
-                {{selected_param_info|default:"No selected param"|linebreaks}}
 
-            </pre>
+            
+            {% for field, __ in selected_param_info.items %}
+            <ul {% if field == selected_field %} class="bg-primary-subtle" {% endif %}>
+                <a href="?manager={{ selected_manager }}&param={{ selected_param }}&field={{ field }}" class="text-decoration-none text-dark">{{ field }} </a>
+                    
+            </ul>
+            {% endfor %}
+
+
+
+        <!-- Attributes -->
+            <h2 class="fw-bold">Attributes: </h2>
+                <h5 class="fw-bold">Selected Parameter Field:</h5>
+                <h5 class="fw-bold">{{ selected_field }}</h5>
+                
+                
+                {% for key, value in selected_field_info.items %}
+                <ul>
+                   {{key}} : {{value}}
+
+                </ul>
+                {% endfor %}
 
     </div>
 
