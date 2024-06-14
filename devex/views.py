@@ -31,12 +31,18 @@ def devex(request: HttpRequest):
 
 
     selected_field = request.GET.get("field", None)
-    selected_field_info = selected_param_info.get(selected_field, None) if selected_param_info else None
-    selected_field_info = {k: v for k, v in selected_field_info.items() if k not in fields_to_ignore} if selected_field_info else None
+    
+    try:
+        selected_field_info = selected_param_info.get(selected_field, None) if selected_param_info else None
+        selected_field_info = (
+            {k: v for k, v in selected_field_info.items() if k not in fields_to_ignore} if selected_field_info else None
+        )
+        item = ["value"]
+        selected_value = {k: v for k, v in selected_field_info.items() if k in item} if selected_field_info else None
+    except Exception:
+        selected_field_info = selected_param_info.get(selected_field, None) if selected_param_info else None
+        selected_value = {"value": selected_field_info}
 
-
-    item = ["value"]
-    selected_value = {k: v for k, v in selected_field_info.items() if k in item} if selected_field_info else None
 
 
     print(f"{selected_field=}")

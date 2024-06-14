@@ -8,23 +8,27 @@
 
 
 <!-- Avalabie managers -->
-<div class ="row ">
-    <div class = "col-lg-4 border">
-        <legend><h2 class="fw-bold">Available Managers</h2></legend>
-              
-            {% for manager in available_managers %}
-            <ul {% if manager == selected_manager %} class="bg-success-subtle" {% endif %}>
-            <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
+ <div class="row">
+    <div class = "col border">
+        <div class ="overflow-scroll" style=" max-height: 850px">
+        
+            <legend><h2 class="fw-bold">Available Managers</h2></legend>
                 
-            </ul>
-            {% endfor %}
-    
+                {% for manager in available_managers %}
+                <ul {% if manager == selected_manager %} class="bg-success-subtle" {% endif %}>
+                <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
+                    
+                </ul>
+                {% endfor %}
+        
+        </div>
     </div>
         
 
 
 <!-- Parameters -->
-    <div class = "col-lg-4 border ">
+    <div class = "col border ">
+        <div class ="overflow-scroll" style="max-height: 850px">
         <h2 class="fw-bold">Parameters: </h2>
             <h5 class="fw-bold">Selected Manager: </h5>
             <h5 class="fw-bold">{{selected_manager}}</h5>
@@ -35,12 +39,13 @@
                     
                 </ul>
             {% endfor %}
-
+        </div>
     </div>
 
 
 <!-- Parameter Fields -->
-    <div class = "col-lg-4 border ">
+    <div class = "col border ">
+        <div class ="overflow-auto" style="max-height: 850px"></div>
         <h2 class="fw-bold">Parameter Fields: </h2>
             <h5 class="fw-bold">Selected Parameter: </h5>
             <h5 class="fw-bold">{{ selected_param }}</h5>
@@ -76,7 +81,7 @@
         
         {% endfor %}
 
-
+        </div>
             
 
     </div>
