@@ -13,7 +13,7 @@
         <legend><h2 class="fw-bold">Available Managers</h2></legend>
               
             {% for manager in available_managers %}
-            <ul {% if manager == selected_manager %} class="bg-primary-subtle" {% endif %}>
+            <ul {% if manager == selected_manager %} class="bg-success-subtle" {% endif %}>
             <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
                 
             </ul>
@@ -30,7 +30,7 @@
             <h5 class="fw-bold">{{selected_manager}}</h5>
         
             {% for param, param_info in selected_manager_params.items %}
-            <ul {% if param == selected_param %} class="bg-primary-subtle" {% endif %}>
+            <ul {% if param == selected_param %} class="bg-success-subtle" {% endif %}>
                 <a href="?manager={{ selected_manager }}&param={{ param }}" class="text-decoration-none text-dark">{{ param }} </a>
                     
                 </ul>
@@ -47,7 +47,7 @@
 
             
             {% for field, __ in selected_param_info.items %}
-            <ul {% if field == selected_field %} class="bg-primary-subtle" {% endif %}>
+            <ul {% if field == selected_field %} class="bg-success-subtle" {% endif %}>
                 <a href="?manager={{ selected_manager }}&param={{ selected_param }}&field={{ field }}" class="text-decoration-none text-dark">{{ field }} </a>
                     
             </ul>
@@ -56,17 +56,28 @@
 
 
         <!-- Attributes -->
-            <h2 class="fw-bold">Attributes: </h2>
-                <h5 class="fw-bold">Selected Parameter Field:</h5>
-                <h5 class="fw-bold">{{ selected_field }}</h5>
-                
-                
-                {% for key, value in selected_field_info.items %}
-                <ul>
-                   {{key}} : {{value}}
+        <h2 class="fw-bold">Attributes: </h2>
+            <h5 class="fw-bold">Selected Parameter Field:</h5>
+            <h5 class="fw-bold">{{ selected_field }}</h5>
+            
+            
+            {% for key, value in selected_field_info.items %}
+            <ul>
+                {{key}} : {{value}}
 
-                </ul>
-                {% endfor %}
+            </ul>
+            {% endfor %}
+
+
+        <!-- Value -->
+        
+        {% for key, value in selected_value.items %}
+        <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center"> {{ value }}</h5>
+        
+        {% endfor %}
+
+
+            
 
     </div>
 
