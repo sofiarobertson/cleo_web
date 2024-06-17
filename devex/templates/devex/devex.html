@@ -9,18 +9,30 @@
 
 <!-- Avalabie managers -->
  <div class="row">
-    <div class = "col border">
-        <div class ="overflow-scroll" style=" max-height: 850px">
-        
-            <legend><h2 class="fw-bold">Available Managers</h2></legend>
-                
-                {% for manager in available_managers %}
-                <ul {% if manager == selected_manager %} class="bg-success-subtle" {% endif %}>
-                <a href="?manager={{ manager }}" class="text-decoration-none text-dark">{{ manager }} </a>
-                    
-                </ul>
+    <div class="col border">
+        <div class="overflow-scroll" style=" max-height: 850px">
+                <legend><h2 class="fw-bold">Available Managers</h2></legend>
+                    <ul class="tree list-unstyled">
+                        {% for major_manager, minor_managers in major_managers.items %}
+                            <li>
+                                <details>
+                                    <summary {% if major_manager == selected_manager %} class="bg-success-subtle" {% endif %}>
+                                    <a href="?manager={{ major_manager }}" class="text-decoration-none text-dark">{{ major_manager }} </a>
+                                    </summary>
+
+                                    {% if minor_managers %}
+                                        <ul>
+                                            {% for minor_manager in minor_managers %}
+                                            <li>
+                                            <a href="?manager={{ minor_manager }}" class="text-decoration-none text-dark {% if minor_manager == selected_manager %}bg-success-subtle{% endif %}">{{ minor_manager }} </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    </details>
+                                </li>
                 {% endfor %}
-        
+            </ul>
         </div>
     </div>
         
@@ -31,7 +43,7 @@
         <div class ="overflow-scroll" style="max-height: 850px">
         <h2 class="fw-bold">Parameters: </h2>
             <h5 class="fw-bold">Selected Manager: </h5>
-            <h5 class="fw-bold">{{selected_manager}}</h5>
+            <h5 class="fw-bold">{{ selected_manager }}</h5>
         
             {% for param, param_info in selected_manager_params.items %}
             <ul {% if param == selected_param %} class="bg-success-subtle" {% endif %}>
@@ -86,8 +98,6 @@
 
     </div>
 
-
-</div>
 
 </fieldset>
 

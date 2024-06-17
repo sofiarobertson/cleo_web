@@ -11,6 +11,20 @@ def devex(request: HttpRequest):
     available_managers = cc.show_managers()
     
 
+    major_managers = {}
+    for manager in available_managers:
+        major, minor = manager.split('.')
+        if major == minor:
+             major_managers[major] = []
+        else: 
+            if major in major_managers:
+                  major_managers[major].append(manager)
+            else:
+                 major_managers[major] = [manager]
+
+
+
+
     selected_manager = request.GET.get("manager", None)
 
     selected_manager_params = {}
@@ -51,6 +65,7 @@ def devex(request: HttpRequest):
         "devex/devex.html",
         context={
             "available_managers": available_managers,
+            "major_managers": major_managers,
             "selected_manager_params": selected_manager_params,
             "selected_manager": selected_manager,
             "selected_param": selected_param,
