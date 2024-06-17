@@ -12,16 +12,20 @@ def devex(request: HttpRequest):
     
 
     major_managers = {}
+   
     for manager in available_managers:
         major, minor = manager.split('.')
         if major == minor:
              major_managers[major] = []
+
         else: 
             if major in major_managers:
-                  major_managers[major].append(manager)
+                  major_managers[major].append(minor)
             else:
-                 major_managers[major] = [manager]
+                 major_managers[major] = [minor]
 
+         
+         
 
 
 
