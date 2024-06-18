@@ -25,7 +25,7 @@ def devex(request: HttpRequest):
                  major_managers[major] = [minor]
 
          
-         
+        
 
 
 
