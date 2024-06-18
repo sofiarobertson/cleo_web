@@ -1,76 +1,83 @@
 {% extends "devex/base.html" %}
 {% block content %}
-    <h1>Device Explorer</h1>
-    <fieldset>
-        <!-- Avalabie managers -->
-        <div class="row">
-            <div class="col border">
-                <div class="overflow-scroll" style=" max-height: 850px">
-                    <legend>
-                        <h2 class="fw-bold">Available Managers</h2>
-                    </legend>
-                    <ul class="tree list-unstyled">
-                        {% for major_manager, minor_managers in major_managers.items %}
-                            <li>
-                                <details {% if major_manager in selected_manager %}open{% endif %}>
-                                    <summary {% if major_manager == selected_manager %}class="bg-success-subtle"{% endif %}>
-                                        <a href="?manager={{ major_manager }}"
-                                           class="text-decoration-none text-dark ">{{ major_manager }}</a>
-                                    </summary>
-                                    <ul>
-                                        {% for minor_manager in minor_managers %}
-                                            <li>
-                                                <a href="?manager={{ major_manager }}.{{ minor_manager }}"
-                                                   class="text-decoration-none text-dark {% if minor_manager in selected_manager %}bg-success-subtle{% endif %}">{{ minor_manager }} </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </details>
-                            </li>
-                        {% endfor %}
-                    </ul>
+    <div class="container vh-100">
+        <h1>Device Explorer</h1>
+        <fieldset>
+            <!-- Avalabie managers -->
+            <div class="container-fluid vh-100">
+                <div class="row h-100">
+                    <div class="col border column">
+                        <div class="overflow-scroll" style=" max-height: 100%;">
+                            <legend>
+                                <h2 class="fw-bold">Available Managers</h2>
+                            </legend>
+                            <ul class="tree list-unstyled">
+                                {% for major_manager, minor_managers in major_managers.items %}
+                                    <li>
+                                        <details {% if major_manager in selected_manager %}open{% endif %}>
+                                            <summary {% if major_manager == selected_manager %}class="bg-success-subtle"{% endif %}>
+                                                <a href="?manager={{ major_manager }}"
+                                                   class="text-decoration-none text-dark ">{{ major_manager }}</a>
+                                            </summary>
+                                            <ul>
+                                                {% for minor_manager in minor_managers %}
+                                                    <li>
+                                                        <a href="?manager={{ major_manager }}.{{ minor_manager }}"
+                                                           class="text-decoration-none text-dark {% if minor_manager in selected_manager %}bg-success-subtle{% endif %}">{{ minor_manager }} </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </details>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Parameters -->
+                    <div class = "col border column">
+                        <div class ="overflow-scroll" style="max-height: 100%;">
+                            <h2 class="fw-bold">Parameters:</h2>
+                            <h5 class="fw-bold">Selected Manager:</h5>
+                            <h5 class="fw-bold">{{ selected_manager }}</h5>
+                            {% for param, param_info in selected_manager_params.items %}
+                                <ul {% if param == selected_param %}class="bg-success-subtle"{% endif %}>
+                                    <a href="?manager={{ selected_manager }}&param={{ param }}"
+                                       class="text-decoration-none text-dark">{{ param }}</a>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- Parameter Fields and Attributes-->
+                    <div class="col border">
+                        <div class="first-row">
+                            <h2 class="fw-bold">Parameter Fields:</h2>
+                            <h5 class="fw-bold">Selected Parameter:</h5>
+                            <h5 class="fw-bold">{{ selected_param }}</h5>
+                            {% for field, __ in selected_param_info.items %}
+                                <ul {% if field == selected_field %}class="bg-success-subtle"{% endif %}>
+                                    <a href="?manager={{ selected_manager }}&param={{ selected_param }}&field={{ field }}"
+                                       class="text-decoration-none text-dark">{{ field }}</a>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                        <!-- Attributes -->
+                        <div class="second-row">
+                            <h2 class="fw-bold">Attributes:</h2>
+                            <h5 class="fw-bold">Selected Parameter Field:</h5>
+                            <h5 class="fw-bold">{{ selected_field }}</h5>
+                            {% for key, value in selected_field_info.items %}
+                                <ul>
+                                    {{ key }} : {{ value }}
+                                </ul>
+                            {% endfor %}
+                            <!-- Value -->
+                            {% for key, value in selected_value.items %}
+                                <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Parameters -->
-            <div class = "col border ">
-                <div class ="overflow-scroll" style="max-height: 850px">
-                    <h2 class="fw-bold">Parameters:</h2>
-                    <h5 class="fw-bold">Selected Manager:</h5>
-                    <h5 class="fw-bold">{{ selected_manager }}</h5>
-                    {% for param, param_info in selected_manager_params.items %}
-                        <ul {% if param == selected_param %}class="bg-success-subtle"{% endif %}>
-                            <a href="?manager={{ selected_manager }}&param={{ param }}"
-                               class="text-decoration-none text-dark">{{ param }}</a>
-                        </ul>
-                    {% endfor %}
-                </div>
-            </div>
-            <!-- Parameter Fields -->
-            <div class = "col border ">
-                <div class ="overflow-scroll" style="max-height: 850px">
-                    <h2 class="fw-bold">Parameter Fields:</h2>
-                    <h5 class="fw-bold">Selected Parameter:</h5>
-                    <h5 class="fw-bold">{{ selected_param }}</h5>
-                    {% for field, __ in selected_param_info.items %}
-                        <ul {% if field == selected_field %}class="bg-success-subtle"{% endif %}>
-                            <a href="?manager={{ selected_manager }}&param={{ selected_param }}&field={{ field }}"
-                               class="text-decoration-none text-dark">{{ field }}</a>
-                        </ul>
-                    {% endfor %}
-                    <!-- Attributes -->
-                    <h2 class="fw-bold">Attributes:</h2>
-                    <h5 class="fw-bold">Selected Parameter Field:</h5>
-                    <h5 class="fw-bold">{{ selected_field }}</h5>
-                    {% for key, value in selected_field_info.items %}
-                        <ul>
-                            {{ key }} : {{ value }}
-                        </ul>
-                    {% endfor %}
-                    <!-- Value -->
-                    {% for key, value in selected_value.items %}
-                        <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
-                    {% endfor %}
-                </div>
-            </div>
-        </fieldset>
-    {% endblock %}
+        </div>
+    </fieldset>
+{% endblock %}
