@@ -65,12 +65,12 @@
         max-height: 100%;
       }
       .first-row {
-        max-height: calc(55vh); 
+        max-height: calc(50vh); 
         overflow-y: auto;
         margin-bottom: 10px;
       }
       .second-row {
-        height: calc(45vh); 
+        height: calc(50vh); 
         overflow-y: auto;
       }
 
@@ -85,7 +85,10 @@
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>
     </head>
+
+    <div class="container-fluid vh-100">
     <body>
         {% block content %}{% endblock %}
     </body>
+  </div>
 </html>

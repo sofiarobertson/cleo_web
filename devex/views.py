@@ -24,10 +24,6 @@ def devex(request: HttpRequest):
             else:
                  major_managers[major] = [minor]
 
-         
-        
-
-
 
     selected_manager = request.GET.get("manager", None)
 
@@ -63,6 +59,44 @@ def devex(request: HttpRequest):
 
 
 
+    selected_manager_samplers = {}
+
+    try:
+            samplers = cc.show_samplers(selected_manager).keys()
+            for sampler in samplers:
+                sampler_info = cc.get_sampler(selected_manager, sampler)
+                selected_manager_samplers[sampler] = sampler_info
+    except Exception as error:
+            print(f"ERROR: {selected_manager}: {error}")
+
+   
+    selected_sampler = request.GET.get("sampler", None)
+    selected_sampler_info = selected_manager_samplers[selected_sampler][selected_sampler] if selected_sampler else None
+    samplerfields_to_ignore = ["name", "fitsname", "type", "id", "description"]
+    selected_sampler_info = {k: v for k, v in selected_sampler_info.items() if k not in samplerfields_to_ignore} if selected_sampler_info else None
+    
+
+    selected_sampler_field = request.GET.get("field", None)
+
+    try:
+        selected_sampler_field_info = selected_sampler_info.get(selected_sampler_field, None) if selected_sampler_info else None
+        selected_sampler_field_info = (
+            {k: v for k, v in selected_sampler_field_info.items() if k not in samplerfields_to_ignore} if selected_sampler_field_info else None
+        )
+        item = ["value"]
+        selected_sampler_value = {k: v for k, v in selected_sampler_field_info.items() if k in item} if selected_sampler_field_info else None
+    except Exception:
+        selected_field_info = selected_param_info.get(selected_field, None) if selected_sampler_info else None
+        selected_sampler_value = {"value": selected_sampler_field_info}
+
+
+    
+
+
+
+
+
+
     print(f"{selected_field=}")
     return render(
         request,
@@ -76,6 +110,13 @@ def devex(request: HttpRequest):
             "selected_param_info": selected_param_info,
             "selected_field": selected_field,
             "selected_field_info": selected_field_info,
-            "selected_value":selected_value 
+            "selected_value":selected_value,
+            "selected_manager_samplers":selected_manager_samplers,
+            "selected_sampler":selected_sampler,
+            "selected_sampler_info":selected_sampler_info,
+            "selected_sampler_field":selected_sampler_field,
+            "selected_sampler_field_info": selected_sampler_field_info,
+            "selected_sampler_value":selected_sampler_value
+
         },
     )

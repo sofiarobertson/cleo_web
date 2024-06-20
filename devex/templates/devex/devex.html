@@ -76,8 +76,54 @@
                             {% endfor %}
                         </div>
                     </div>
+
+
+                    <!-- Samplers -->
+                    <div class = "col border column">
+                        <div class ="overflow-scroll" style="max-height: 100%;">
+                            <h2 class="fw-bold">Samplers:</h2>
+                            <h5 class="fw-bold">Selected Manager:</h5>
+                            <h5 class="fw-bold">{{ selected_manager }}</h5>
+                            {% for sampler, sampler_info in selected_manager_samplers.items %}
+                                <ul {% if sampler == selected_sampler %}class="bg-success-subtle"{% endif %}>
+                                    <a href="?manager={{ selected_manager }}&sampler={{ sampler }}"
+                                    class="text-decoration-none text-dark">{{ sampler }}</a>
+                                </ul> 
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- Sampler Fields and Attributes-->
+                    <div class="col border">
+                        <div class="first-row">
+                            <h2 class="fw-bold">Sampler Fields:</h2>
+                            <h5 class="fw-bold">Selected Sampler:</h5>
+                            <h5 class="fw-bold">{{ selected_sampler }}</h5>
+                            {% for field, __ in selected_sampler_info.items %}
+                                <ul {% if field == selected_sampler_field %}class="bg-success-subtle"{% endif %}>
+                                    <a href="?manager={{ selected_manager }}&sampler={{ selected_sampler }}&field={{ field }}"
+                                       class="text-decoration-none text-dark">{{ field }}</a>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                        <!-- Attributes -->
+                        <div class="second-row">
+                            <h2 class="fw-bold">Attributes:</h2>
+                            <h5 class="fw-bold">Selected Sampler Field:</h5>
+                            <h5 class="fw-bold">{{ selected_sampler_field }}</h5>
+                            {% for key, value in selected_sampler_field_info.items %}
+                            <ul>
+                                {{ key }} : {{ value }}
+                            </ul>
+                            {% endfor %}
+                            <!-- Value -->
+                            {% for key, value in selected_sampler_value.items %}
+                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
+                        {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </fieldset>
 {% endblock %}
+
