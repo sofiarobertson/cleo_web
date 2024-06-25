@@ -74,6 +74,11 @@
         overflow-y: auto;
       }
 
+      .has-minor-managers {
+        text-color: lightblue; 
+        display: inline-block;
+      }
+
         </style>
         <meta charset="utf-8">
         <title>Devex</title>
@@ -86,7 +91,7 @@
                 crossorigin="anonymous"></script>
     </head>
 
-    <div class="container-fluid vh-100">
+    <div class="container vh-100 overflow-y-hidden">
     <body>
         {% block content %}{% endblock %}
     </body>
