@@ -126,7 +126,7 @@ def devex(request: HttpRequest):
     except Exception:
             selected_samplerfield_info = selected_sampler_info.get(selected_samplerfield, None) if selected_sampler_info else None
             selected_samplervalue = {"value": selected_paramfield_info}
-
+    print(f"{selected_sampler=}")
     return render(
         request,
         "devex/devex.html",

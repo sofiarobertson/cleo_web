@@ -40,7 +40,7 @@
                         <h5 class="fw-bold">{{ selected_manager }}</h5>
                         {% for param, param_info in selected_manager_params.items %}
                             <ul {% if param == selected_param %}class="bg-success-subtle"{% endif %}>
-                                <a href="?manager={{ selected_manager }}&param={{ param }}"
+                                <a href="?manager={{ selected_manager }}&param={{ param }}&paramfield={{ paramfield }}&sampler={{ selected_sampler | default:"" }}&samplerfield={{ selected_samplerfield | default:"" }}"
                                    class="text-decoration-none text-dark">{{ param }}</a>
                             </ul>
                         {% endfor %}
@@ -54,7 +54,7 @@
                         <h5 class="fw-bold">{{ selected_param }}</h5>
                         {% for paramfield, __ in selected_param_info.items %}
                             <ul {% if paramfield == selected_paramfield %}class="bg-success-subtle"{% endif %}>
-                                <a href="?manager={{ selected_manager }}&param={{ selected_param }}&paramfield={{ paramfield }}"
+                                <a href="?manager={{ selected_manager }}&param={{ selected_param | default:"" }}&paramfield={{ paramfield }}&sampler={{ selected_sampler | default:"" }}&samplerfield={{ selected_samplerfield | default:"" }}"
                                    class="text-decoration-none text-dark">{{ paramfield }}</a>
                             </ul>
                         {% endfor %}
@@ -83,7 +83,7 @@
                         <h5 class="fw-bold">{{ selected_manager }}</h5>
                         {% for sampler, sampler_info in selected_manager_samplers.items %}
                             <ul {% if sampler == selected_sampler %}class="bg-success-subtle"{% endif %}>
-                                <a href="?manager={{ selected_manager }}&sampler={{ sampler }}"
+                                <a href="?manager={{ selected_manager }}&param={{ selected_param | default:"" }}&paramfield={{ selected_paramfield | default:"" }}&sampler={{ sampler }}&samplerfield={{ samplerfield }}"
                                    class="text-decoration-none text-dark">{{ sampler }}</a>
                             </ul>
                         {% endfor %}
@@ -97,7 +97,7 @@
                         <h5 class="fw-bold">{{ selected_sampler }}</h5>
                         {% for samplerfield, __ in selected_sampler_info.items %}
                             <ul {% if samplerfield == selected_samplerfield %}class="bg-success-subtle"{% endif %}>
-                                <a href="?manager={{ selected_manager }}&sampler={{ selected_sampler }}&samplerfield={{ samplerfield }}"
+                                <a href="?manager={{ selected_manager }}&param={{ selected_param }}&paramfield={{ selected_paramfield }}&sampler={{ selected_sampler }}&samplerfield={{ samplerfield }}"
                                    class="text-decoration-none text-dark">{{ samplerfield }}</a>
                             </ul>
                         {% endfor %}
