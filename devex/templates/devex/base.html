@@ -79,6 +79,13 @@
         display: inline-block;
       }
 
+      .sticky-top {
+        postion: sticky;
+        top; 0;
+        background-color: white;
+
+      }
+
         </style>
         <meta charset="utf-8">
         <title>Devex</title>
@@ -91,9 +98,10 @@
                 crossorigin="anonymous"></script>
     </head>
 
-    <div class="container vh-100 overflow-y-hidden">
-    <body>
+    
+    <body class="vh-100">
+      <div class="container-fluid overflow-y-hidden" style="height: 100vh;">
         {% block content %}{% endblock %}
+      </div>
     </body>
-  </div>
 </html>
