@@ -64,6 +64,22 @@ def get_param_value(request, manager, param, field=None):
     return render(request, 'devex/param_value.html', context={'value': value})
 
 
+def get_sampler_value(request, manager, sampler, field=None):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+    try:
+        sampler_info = cc.get_sampler(manager, sampler)
+        if field:
+            value_call = sampler_info[sampler].get(field)
+            value = value_call.get('value')
+        else:
+            value = sampler_info[sampler].get('value')
+    except Exception as error:
+         value = "error"
+         print(f"ERROR:{manager}.{sampler}.{field}:{error}")
+
+    return render(request, 'devex/sampler_value.html', context={'value': value})
+
+
 def devex(request: HttpRequest):
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
 

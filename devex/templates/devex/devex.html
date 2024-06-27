@@ -144,7 +144,11 @@
                         </ul>
                         <!-- Value -->
                         {% for key, value in selected_samplervalue.items %}
-                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
+                        <div id="sampler-value" 
+                        hx-get="{% if selected_samplerfield == selected_sampler %}{% url 'devex:get_sampler_value' selected_manager selected_sampler %}{% else %}{% url 'devex:get_sampler_value_complex' selected_manager selected_sampler selected_samplerfield %}{% endif %}"
+                        hx-trigger="every 1s"> 
+                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center"> {{ value }}</h5>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>
