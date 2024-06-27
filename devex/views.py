@@ -48,7 +48,20 @@ def get_samplers_for_manager(chalice_client: ChaliceClient, manager: str):
     return selected_manager_samplers
 
 
+def get_param_value(request, manager, param, field=None):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+    try:
+        param_info = cc.get_parameter(manager, param)
+        if field:
+            value_call = param_info[param].get(field)
+            value = value_call.get('value')
+        else:
+            value = param_info[param].get('value')
+    except Exception as error:
+         value = "error"
+         print(f"ERROR:{manager}.{param}.{field}:{error}")
 
+    return render(request, 'devex/param_value.html', context={'value': value})
 
 
 def devex(request: HttpRequest):
@@ -85,6 +98,7 @@ def devex(request: HttpRequest):
 
     if selected_paramfield:
         selected_paramfield_info = selected_param_info[selected_paramfield]
+
 
     try:
             item = ["value"]
@@ -151,71 +165,3 @@ def devex(request: HttpRequest):
     )
 
 
-# selected_manager_samplers = {}
-
-    # try:
-    #     samplers = cc.show_samplers(selected_manager).keys()
-    #     for sampler in samplers:
-    #         sampler_info = cc.get_sampler(selected_manager, sampler)
-    #         selected_manager_samplers[sampler] = sampler_info
-    # except Exception as error:
-    #     print(f"ERROR: {selected_manager}: {error}")
-
-#     selected_sampler = request.GET.get("sampler", None)
-#     if selected_sampler and selected_sampler != "None":
-
-#         selected_sampler_info = selected_manager_samplers[selected_sampler][selected_sampler] if selected_sampler else None
-#         samplerfields_to_ignore = ["name", "fitsname", "type", "id", "description"]
-#         selected_sampler_info = (
-#             {k: v for k, v in selected_sampler_info.items() if k not in samplerfields_to_ignore}
-#             if selected_sampler_info
-#             else None
-#         )
-
-#         selected_samplerfield = request.GET.get("samplerfield", None)
-
-#         try:
-#             selected_samplerfield_info = (
-#                 selected_sampler_info.get(selected_samplerfield, None) if selected_sampler_info else None
-#             )
-#             selected_samplerfield_info = (
-#                 {k: v for k, v in selected_samplerfield_info.items() if k not in samplerfields_to_ignore}
-#                 if selected_samplerfield_info
-#                 else None
-#             )
-#             item = ["value"]
-#             selected_sampler_value = (
-#                 {k: v for k, v in selected_samplerfield_info.items() if k in item} if selected_samplerfield_info else None
-#             )
-#         except Exception:
-#             selected_samplerfield_info = (
-#                 selected_sampler_info.get(selected_samplerfield, None) if selected_sampler_info else None
-#             )
-#             selected_sampler_value = {"value": selected_samplerfield_info}
-#     else:
-#         selected_sampler_info = None
-#         selected_samplerfield = None
-#         selected_samplerfield_info = None
-#         selected_sampler_value = None
-#     print(f"{selected_paramfield=}")
-#     return render(
-#         request,
-#         "devex/devex.html",
-#         context={
-#             "available_managers": available_managers,
-#             "major_managers": major_managers,
-#             "selected_manager_params": selected_manager_params,
-#             "selected_manager": selected_manager,
-#             "selected_param": selected_param,
-#             "selected_param_info": selected_param_info,
-#             "selected_paramfield": selected_paramfield,
-#             "selected_paramfield_info": selected_paramfield_info,
-#             "selected_value": selected_value,
-#             "selected_manager_samplers": selected_manager_samplers,
-#             "selected_sampler": selected_sampler,
-#             "selected_sampler_info": selected_sampler_info,
-#             "selected_samplerfield": selected_samplerfield,
-#             "selected_samplerfield_info": selected_samplerfield_info,
-#             "selected_sampler_value": selected_sampler_value,
-#         },
-#     )

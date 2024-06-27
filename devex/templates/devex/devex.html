@@ -40,12 +40,14 @@
                         <h5 class="fw-bold">Selected Manager:</h5>
                         <h5 class="fw-bold">{{ selected_manager }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for param, param_info in selected_manager_params.items %}
-                            <ul {% if param == selected_param %}class="bg-success-subtle"{% endif %}>
+                            <li {% if param == selected_param %}class="bg-success-subtle"{% endif %}>
                                 <a href="?manager={{ selected_manager }}&param={{ param }}&paramfield={{ paramfield }}&sampler={{ selected_sampler | default:"" }}&samplerfield={{ selected_samplerfield | default:"" }}"
                                    class="text-decoration-none text-dark">{{ param }}</a>
-                            </ul>
+                            </li>
                         {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <!-- Parameter Fields and Attributes-->
@@ -56,12 +58,14 @@
                         <h5 class="fw-bold">Selected Parameter:</h5>
                         <h5 class="fw-bold">{{ selected_param }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for paramfield, __ in selected_param_info.items %}
-                            <ul {% if paramfield == selected_paramfield %}class="bg-success-subtle"{% endif %}>
+                            <li {% if paramfield == selected_paramfield %}class="bg-success-subtle"{% endif %}>
                                 <a href="?manager={{ selected_manager }}&param={{ selected_param | default:"" }}&paramfield={{ paramfield }}&sampler={{ selected_sampler | default:"" }}&samplerfield={{ selected_samplerfield | default:"" }}"
                                    class="text-decoration-none text-dark">{{ paramfield }}</a>
-                            </ul>
+                            </li>
                         {% endfor %}
+                        </ul>
                     </div>
                     <!-- Attributes -->
                     <div class="second-row">
@@ -70,15 +74,23 @@
                         <h5 class="fw-bold">Selected Parameter Field:</h5>
                         <h5 class="fw-bold">{{ selected_paramfield }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for key, value in selected_paramfield_info.items %}
-                            <ul>
+  
+
+                        <li>
                                 {{ key }} : {{ value }}
-                            </ul>
+                            </li>
                         {% endfor %}
                         <!-- Value -->
                         {% for key, value in selected_paramvalue.items %}
-                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
+                            <div id="param-value" 
+                            hx-get="{% if selected_paramfield == selected_param %}{% url 'devex:get_param_value' selected_manager selected_param %}{% else %}{% url 'devex:get_param_value_complex' selected_manager selected_param selected_paramfield %}{% endif %}"
+                            hx-trigger="every 1s"> 
+                                <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center"> {{ value }}</h5>
+                            </div>
                         {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <!-- Samplers -->
@@ -89,12 +101,14 @@
                         <h5 class="fw-bold">Selected Manager:</h5>
                         <h5 class="fw-bold">{{ selected_manager }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for sampler, sampler_info in selected_manager_samplers.items %}
-                            <ul {% if sampler == selected_sampler %}class="bg-success-subtle"{% endif %}>
+                            <li {% if sampler == selected_sampler %}class="bg-success-subtle"{% endif %}>
                                 <a href="?manager={{ selected_manager }}&param={{ selected_param | default:"" }}&paramfield={{ selected_paramfield | default:"" }}&sampler={{ sampler }}&samplerfield={{ samplerfield }}"
                                    class="text-decoration-none text-dark">{{ sampler }}</a>
-                            </ul>
+                            </li>
                         {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <!-- Sampler Fields and Attributes-->
@@ -105,12 +119,14 @@
                         <h5 class="fw-bold">Selected Sampler:</h5>
                         <h5 class="fw-bold">{{ selected_sampler }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for samplerfield, __ in selected_sampler_info.items %}
-                            <ul {% if samplerfield == selected_samplerfield %}class="bg-success-subtle"{% endif %}>
+                            <li {% if samplerfield == selected_samplerfield %}class="bg-success-subtle"{% endif %}>
                                 <a href="?manager={{ selected_manager }}&param={{ selected_param }}&paramfield={{ selected_paramfield }}&sampler={{ selected_sampler }}&samplerfield={{ samplerfield }}"
                                    class="text-decoration-none text-dark">{{ samplerfield }}</a>
-                            </ul>
+                            </li>
                         {% endfor %}
+                        </ul>
                     </div>
                     <!-- Attributes -->
                     <div class="second-row">
@@ -119,14 +135,16 @@
                         <h5 class="fw-bold">Selected Sampler Field:</h5>
                         <h5 class="fw-bold">{{ selected_samplerfield }}</h5>
                         </legend>
+                        <ul class="list-unstyled">
                         {% for key, value in selected_samplerfield_info.items %}
-                            <ul>
+                            <li>
                                 {{ key }} : {{ value }}
-                            </ul>
+                            </li>
                         {% endfor %}
+                        </ul>
                         <!-- Value -->
                         {% for key, value in selected_samplervalue.items %}
-                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center overflow-x-hidden">{{ value }}</h5>
+                            <h5 class="p-2 mb-2 bg-primary-subtle text-dark text-center">{{ value }}</h5>
                         {% endfor %}
                     </div>
                 </div>
