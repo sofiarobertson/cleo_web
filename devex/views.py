@@ -5,7 +5,6 @@ from zmqgc import ZMQGrailClient as ChaliceClient
 from django.conf import settings
 
 
-
 def get_available_managers(chalice_client: ChaliceClient):
     available_managers: list[str] = chalice_client.show_managers()
     major_managers = {}
@@ -54,14 +53,14 @@ def get_param_value(request, manager, param, field=None):
         param_info = cc.get_parameter(manager, param)
         if field:
             value_call = param_info[param].get(field)
-            value = value_call.get('value')
+            value = value_call.get("value")
         else:
-            value = param_info[param].get('value')
+            value = param_info[param].get("value")
     except Exception as error:
-         value = "error"
-         print(f"ERROR:{manager}.{param}.{field}:{error}")
+        value = "error"
+        print(f"ERROR:{manager}.{param}.{field}:{error}")
 
-    return render(request, 'devex/param_value.html', context={'value': value})
+    return render(request, "devex/param_value.html", context={"value": value})
 
 
 def get_sampler_value(request, manager, sampler, field=None):
@@ -70,14 +69,14 @@ def get_sampler_value(request, manager, sampler, field=None):
         sampler_info = cc.get_sampler(manager, sampler)
         if field:
             value_call = sampler_info[sampler].get(field)
-            value = value_call.get('value')
+            value = value_call.get("value")
         else:
-            value = sampler_info[sampler].get('value')
+            value = sampler_info[sampler].get("value")
     except Exception as error:
-         value = "error"
-         print(f"ERROR:{manager}.{sampler}.{field}:{error}")
+        value = "error"
+        print(f"ERROR:{manager}.{sampler}.{field}:{error}")
 
-    return render(request, 'devex/sampler_value.html', context={'value': value})
+    return render(request, "devex/sampler_value.html", context={"value": value})
 
 
 def devex(request: HttpRequest):
@@ -94,7 +93,6 @@ def devex(request: HttpRequest):
     selected_sampler_info = None
     selected_samplerfield = request.GET.get("samplerfield", None)
     selected_samplerfield_info = None
-
 
     selected_manager_params = get_params_for_manager(cc, selected_manager)
 
@@ -115,18 +113,14 @@ def devex(request: HttpRequest):
     if selected_paramfield:
         selected_paramfield_info = selected_param_info[selected_paramfield]
 
-
     try:
-            item = ["value"]
-            selected_paramvalue = (
-                {k: v for k, v in selected_paramfield_info.items() if k in item} if selected_paramfield_info else None
-            )
+        item = ["value"]
+        selected_paramvalue = (
+            {k: v for k, v in selected_paramfield_info.items() if k in item} if selected_paramfield_info else None
+        )
     except Exception:
-            selected_paramfield_info = selected_param_info.get(selected_paramfield, None) if selected_param_info else None
-            selected_paramvalue = {"value": selected_paramfield_info}
-
-
-
+        selected_paramfield_info = selected_param_info.get(selected_paramfield, None) if selected_param_info else None
+        selected_paramvalue = {"value": selected_paramfield_info}
 
     selected_manager_samplers = get_samplers_for_manager(cc, selected_manager)
 
@@ -147,15 +141,16 @@ def devex(request: HttpRequest):
     if selected_samplerfield:
         selected_samplerfield_info = selected_sampler_info[selected_samplerfield]
 
-
     try:
-            item = ["value"]
-            selected_samplervalue = (
-                {k: v for k, v in selected_samplerfield_info.items() if k in item} if selected_samplerfield_info else None
-            )
+        item = ["value"]
+        selected_samplervalue = (
+            {k: v for k, v in selected_samplerfield_info.items() if k in item} if selected_samplerfield_info else None
+        )
     except Exception:
-            selected_samplerfield_info = selected_sampler_info.get(selected_samplerfield, None) if selected_sampler_info else None
-            selected_samplervalue = {"value": selected_samplerfield_info}
+        selected_samplerfield_info = (
+            selected_sampler_info.get(selected_samplerfield, None) if selected_sampler_info else None
+        )
+        selected_samplervalue = {"value": selected_samplerfield_info}
 
     print(f"{selected_sampler=}")
     return render(
@@ -176,8 +171,72 @@ def devex(request: HttpRequest):
             "selected_samplerfield": selected_samplerfield,
             "selected_samplerfield_info": selected_samplerfield_info,
             "selected_samplervalue": selected_samplervalue,
-
-        }
+        },
     )
 
 
+
+
+def status(request: HttpRequest):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+
+    manager = "ScanCoordinator"
+
+    selected_manager_params = get_params_for_manager(cc, manager)
+
+
+
+
+    subsystem_state = selected_manager_params.get("subsystemState")
+    subselect_state = subsystem_state.get("subsystemState")
+    subselect_state_value = subselect_state.get("value")
+    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+    filtered_state = {key: value
+                      for key, value in subselect_state_value.items() if value != "NotInService"}
+
+    filtered_keys = set(filtered_state.keys())
+
+
+    subsystem_device = selected_manager_params.get("subsystemSelect")
+    subselect_device = subsystem_device.get("subsystemSelect")
+
+
+    filtered_device = {
+        key: value
+        for key, value in subselect_device.items()
+        if key not in ["name", "description", "type", "fitsname"] and value["value"]
+    }
+
+
+    subsystem_status = selected_manager_params.get("subsystemStatus")
+    subselect_status = subsystem_status.get("subsystemStatus")
+    subselect_status_value = subselect_status.get("value")
+    subselect_status_value = dict(zip(range(32), subselect_status_value, strict=True))
+
+    filtered_status = {
+        key: value
+        for key, value in subselect_status_value.items()
+        if key in filtered_keys
+    }
+
+
+
+    return render(
+        request,
+        "devex/status.html",
+        context={
+            "manager": manager,
+            "selected_manager_params": selected_manager_params,
+            "subsystem_device": subsystem_device,
+            "subselect_device": subselect_device,
+            "filtered_device": filtered_device,
+            "subselect_status": subselect_status,
+            "subselect_status_value": subselect_status_value,
+            "filtered_status": filtered_status,
+            "subselect_state": subselect_state,
+            "subselect_state_value": subselect_state_value,
+            "filtered_state": filtered_state,
+            "filtered_keys": filtered_keys,
+
+        },
+    )
