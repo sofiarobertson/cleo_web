@@ -295,3 +295,9 @@ def status(request: HttpRequest):
 
         },
     )
+
+
+def home(request):
+    return render(
+            request,
+            "devex/home.html")

@@ -14,7 +14,7 @@
                         <ul class="list-unstyled"
                             id="get-device"
                             hx-get="{% url 'devex:get_device' manager %}"
-                            hx-trigger="change">
+                            hx-trigger="every 10s">
                             {% include "devex/get_device.html" %}
                         </ul>
                     </div>
@@ -28,7 +28,7 @@
                         <ul class="list-unstyled"
                             id="get-status"
                             hx-get="{% url 'devex:get_status' manager %}"
-                            hx-trigger="change">
+                            hx-trigger="every 10s">
                             {% include "devex/get_status.html" %}
                         </ul>
                     </div>
@@ -42,7 +42,7 @@
                         <ul class="list-unstyled"
                             id="get-state"
                             hx-get="{% url 'devex:get_state' manager %}"
-                            hx-trigger="change">
+                            hx-trigger="every 10s">
                             {% include "devex/get_state.html" %}
                         </ul>
                     </div>
