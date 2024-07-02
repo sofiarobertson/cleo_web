@@ -177,16 +177,71 @@ def devex(request: HttpRequest):
 
 
 
+def get_device(request, manager):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+    manager = "ScanCoordinator"
+    selected_manager_params = get_params_for_manager(cc, manager)
+    subsystem_device = selected_manager_params.get("subsystemSelect")
+    subselect_device = subsystem_device.get("subsystemSelect")
+
+    filtered_device = {
+        key: value
+        for key, value in subselect_device.items()
+        if key not in ["name", "description", "type", "fitsname"] and value["value"]
+    }
+
+    return render(request, "devex/get_device.html", context={"filtered_device": filtered_device})
+
+
+
+
+def get_state(request, manager):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+    manager = "ScanCoordinator"
+    selected_manager_params = get_params_for_manager(cc, manager)
+    subsystem_state = selected_manager_params.get("subsystemState")
+    subselect_state = subsystem_state.get("subsystemState")
+    subselect_state_value = subselect_state.get("value")
+    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+    filtered_state = {key: value
+                      for key, value in subselect_state_value.items() if value != "NotInService"}
+
+    return render(request, "devex/get_state.html", context={"filtered_state": filtered_state})
+
+
+def get_status(request, manager):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+    manager = "ScanCoordinator"
+    selected_manager_params = get_params_for_manager(cc, manager)
+    subsystem_status = selected_manager_params.get("subsystemStatus")
+    subselect_status = subsystem_status.get("subsystemStatus")
+    subselect_status_value = subselect_status.get("value")
+    subselect_status_value = dict(zip(range(32), subselect_status_value, strict=True))
+    subsystem_state = selected_manager_params.get("subsystemState")
+    subselect_state = subsystem_state.get("subsystemState")
+    subselect_state_value = subselect_state.get("value")
+    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+    filtered_state = {key: value
+                      for key, value in subselect_state_value.items() if value != "NotInService"}
+
+    filtered_keys = set(filtered_state.keys())
+
+    filtered_status = {
+        key: value
+        for key, value in subselect_status_value.items()
+        if key in filtered_keys
+    }
+
+    return render(request, "devex/get_status.html", context={"filtered_status": filtered_status})
+
+
+
 def status(request: HttpRequest):
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
 
     manager = "ScanCoordinator"
 
     selected_manager_params = get_params_for_manager(cc, manager)
-
-
-
-
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")

@@ -1,49 +1,52 @@
 {% extends "devex/base.html" %}
 {% block content %}
-<h1>Status Screen</h1>
+    <h1>Status Screen</h1>
     <fieldset class="h-100">
         <!-- scancoordinator device -->
         <div class="container-fluid vh-auto">
-            <h2> System Selection </h2>
+            <h2>System Selection</h2>
             <div class="row h-100 ">
                 <div class="col border column">
                     <div class="overflow-scroll" style=" max-height: 100%;">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Device</h2>
                         </legend>
-                        <ul class="list-unstyled"> 
-                            {% for device, __ in filtered_device.items %} 
-                            <li class="border-top border-bottom">{{ device }}</li> 
-                            {% endfor %} 
+                        <ul class="list-unstyled"
+                            id="get-device"
+                            hx-get="{% url 'devex:get_device' manager %}"
+                            hx-trigger="change">
+                            {% include "devex/get_device.html" %}
                         </ul>
                     </div>
                 </div>
-            <!-- status -->
-            <div class="col border column">
-                <div class="overflow-scroll" style="max-height: 100%;">
-                    <legend class="sticky-top">
-                        <h2 class="fw-bold">Status</h2>
-                    </legend>
-                    <ul class="list-unstyled">
-                        {% for __, status in filtered_status.items %} 
-                        <li class="border-top border-bottom">{{ status }}</li> 
-                        {% endfor %} 
-                    </ul>
+                <!-- status -->
+                <div class="col border column">
+                    <div class="overflow-scroll" style="max-height: 100%;">
+                        <legend class="sticky-top">
+                            <h2 class="fw-bold">Status</h2>
+                        </legend>
+                        <ul class="list-unstyled"
+                            id="get-status"
+                            hx-get="{% url 'devex:get_status' manager %}"
+                            hx-trigger="change">
+                            {% include "devex/get_status.html" %}
+                        </ul>
+                    </div>
+                </div>
+                <!-- state-->
+                <div class="col border column">
+                    <div class="overflow-scroll" style="max-height: 100%;">
+                        <legend class="sticky-top">
+                            <h2 class="fw-bold">State</h2>
+                        </legend>
+                        <ul class="list-unstyled"
+                            id="get-state"
+                            hx-get="{% url 'devex:get_state' manager %}"
+                            hx-trigger="change">
+                            {% include "devex/get_state.html" %}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <!-- state-->
-            <div class="col border column">
-                <div class="overflow-scroll" style="max-height: 100%;">
-                    <legend class="sticky-top">
-                        <h2 class="fw-bold">State</h2>
-                    </legend>
-                    <ul class="list-unstyled">
-                        {% for __, state in filtered_state.items %} 
-                            <li class="border-top border-bottom">{{ state }}</li> 
-                            {% endfor %} 
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </fieldset>
-{% endblock %}
+        </fieldset>
+    {% endblock %}

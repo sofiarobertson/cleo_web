@@ -10,4 +10,7 @@ urlpatterns = [
     path("get-sampler-value/<str:manager>/<str:sampler>/", views.get_sampler_value, name='get_sampler_value'),
     path("get-sampler-value/<str:manager>/<str:sampler>/<str:field>/", views.get_sampler_value, name='get_sampler_value_complex'),
     path("status/", views.status, name='status'),
+    path("get-device/<str:manager>/", views.get_device, name='get_device'),
+    path("get-status/<str:manager>/", views.get_status, name='get_status'),
+    path("get-state/<str:manager>/", views.get_state, name='get_state'),
 ]
