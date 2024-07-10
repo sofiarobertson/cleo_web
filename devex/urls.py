@@ -14,4 +14,7 @@ urlpatterns = [
     path("get-device/<str:manager>/", views.get_device, name='get_device'),
     path("get-status/<str:manager>/", views.get_status, name='get_status'),
     path("get-state/<str:manager>/", views.get_state, name='get_state'),
+    path("script/", views.info, name='script'),
+    # path("<str:title>/"), views. , name='executed_script')
+   
 ]

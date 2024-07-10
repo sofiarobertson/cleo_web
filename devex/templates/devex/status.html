@@ -5,48 +5,76 @@
         <!-- scancoordinator device -->
         <div class="container-fluid vh-auto">
             <h2>System Selection</h2>
-            <div class="row h-100 ">
-                <div class="col border column">
-                    <div class="overflow-scroll" style=" max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">Device</h2>
-                        </legend>
+            <table class = "table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Device #</th>
+                        <th>Status</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
                         <ul class="list-unstyled"
                             id="get-device"
                             hx-get="{% url 'devex:get_device' manager %}"
                             hx-trigger="every 10s">
                             {% include "devex/get_device.html" %}
                         </ul>
-                    </div>
-                </div>
-                <!-- status -->
-                <div class="col border column">
-                    <div class="overflow-scroll" style="max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">Status</h2>
-                        </legend>
+                    </td>
+                    <td>
                         <ul class="list-unstyled"
                             id="get-status"
                             hx-get="{% url 'devex:get_status' manager %}"
                             hx-trigger="every 10s">
                             {% include "devex/get_status.html" %}
                         </ul>
-                    </div>
-                </div>
-                <!-- state-->
-                <div class="col border column">
-                    <div class="overflow-scroll" style="max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">State</h2>
-                        </legend>
+                    </td>
+                    <td>
                         <ul class="list-unstyled"
                             id="get-state"
                             hx-get="{% url 'devex:get_state' manager %}"
                             hx-trigger="every 10s">
                             {% include "devex/get_state.html" %}
                         </ul>
-                    </div>
-                </div>
+                    </td>
+                </tr>
+            </table>
+        {% endblock %}
+        
+        {% comment %} 
+    <div class="row h-100 ">
+        <div class="col border column">
+            <div class="overflow-scroll" style=" max-height: 100%;">
+                <legend class="sticky-top">
+                    <h2 class="fw-bold">Device</h2>
+                </legend>
+                <ul class="list-unstyled" id="get-device" hx-get="{% url 'devex:get_device' manager %}" hx-trigger="every 10s">
+                    {% include "devex/get_device.html" %}
+                </ul>
             </div>
-        </fieldset>
-    {% endblock %}
+        </div>
+        <!-- status -->
+        <div class="col border column">
+            <div class="overflow-scroll" style="max-height: 100%;">
+                <legend class="sticky-top">
+                    <h2 class="fw-bold">Status</h2>
+                </legend>
+                <ul class="list-unstyled" id="get-status" hx-get="{% url 'devex:get_status' manager %}" hx-trigger="every 10s">
+                    {% include "devex/get_status.html" %}
+                </ul>
+            </div>
+        </div>
+        <!-- state-->
+        <div class="col border column">
+            <div class="overflow-scroll" style="max-height: 100%;">
+                <legend class="sticky-top">
+                    <h2 class="fw-bold">State</h2>
+                </legend>
+                <ul class="list-unstyled" id="get-state" hx-get="{% url 'devex:get_state' manager %}" hx-trigger="every 10s">
+                    {% include "devex/get_state.html" %}
+                </ul>
+            </div>
+        </div>
+    </div>
+        </fieldset> {% endcomment %}

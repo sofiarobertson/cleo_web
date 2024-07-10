@@ -1,8 +1,54 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import render
 from zmqgc import ZMQGrailClient as ChaliceClient
-
+from tortoise.models import History, ObsProcedure, ObsProjectRef, Observer, Operator
+from django.views import generic
 from django.conf import settings
+
+
+
+
+
+
+def info(request):
+    histories = History.objects.order_by("-datetime")[:10]
+
+    return render(
+            request,
+            "devex/script.html",
+            context={
+                "histories": histories,
+            }
+        )
+
+
+# class HistoryView(generic.ListView):
+#     template_name = "devex/script.html"
+#     context_object_name = "history"
+
+#     def get_queryset(self):
+#         return History.objects.order_by("datetime").last()
+
+
+
+# class ObsProcedureView(generic.ListView):
+#     template_name = "devex/script.html"
+#     context_object_name = "obsprocedure"
+
+#     def get_queryset(self):
+#         return ObsProcedure.objects.order_by('last_modified').last()
+
+
+# class ObsProjectRefView(generic.ListView):
+#     template_name = "devex/script.html"
+#     context_object_name = "obsprojectref"
+
+#     def get_queryset(self):
+#         return ObsProjectRef.objects.order_by('last_modified').last()
+
+
 
 
 def get_available_managers(chalice_client: ChaliceClient):

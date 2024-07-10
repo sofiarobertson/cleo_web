@@ -1,0 +1,72 @@
+{% extends "devex/base.html" %}
+{% block content %}
+{% load devex %}
+    <h1>AstrID woohoo</h1>
+    
+    <fieldset class="h-100">
+        <!-- scancoordinator device -->
+        <div class="container-fluid vh-auto">
+            <h2>Information</h2>
+            <table class = "table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Project Name</th>
+                        <th>Script Name</th>
+                        <th>Observer</th>
+                        <th>Operator</th>
+                        <th>Executed Script</th>
+                        <th>Script Status</th>
+                        <th>Log</th>
+                    </tr>
+                </thead>
+                {% for history in histories %}
+                <tr>
+                    
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.datetime }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.obsprojectref.name }}</li>
+                           
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.name }} </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.observer }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.operator }}</li>
+                           
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled overflow-y-auto">
+                            <li>{{ history.executed_script | highlight_python }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.status }}</li>
+                           
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.log | highlight_python }}</li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+{% endblock %}

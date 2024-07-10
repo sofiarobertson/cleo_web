@@ -1,5 +1,5 @@
 {% for __, status in filtered_status.items %}
     <li {% if status == "Error" %}class="bg-danger-subtle"{% endif %}
         {% if status == "Warning" %}class="bg-warning-subtle"{% endif %}
-        class="border-top border-bottom">{{ status }}</li>
+        class="border-bottom">{{ status }}</li>
 {% endfor %}
