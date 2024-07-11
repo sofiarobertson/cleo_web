@@ -11,7 +11,6 @@ from django.conf import settings
 
 
 
-
 def info(request):
     histories = History.objects.order_by("-datetime")[:10]
 
@@ -24,29 +23,27 @@ def info(request):
         )
 
 
-# class HistoryView(generic.ListView):
-#     template_name = "devex/script.html"
-#     context_object_name = "history"
-
-#     def get_queryset(self):
-#         return History.objects.order_by("datetime").last()
-
-
-
-# class ObsProcedureView(generic.ListView):
-#     template_name = "devex/script.html"
-#     context_object_name = "obsprocedure"
-
-#     def get_queryset(self):
-#         return ObsProcedure.objects.order_by('last_modified').last()
+def status_info(request):
+    history = History.objects.order_by("datetime").last()
+    return render(
+            request,
+            "devex/script.html",
+            context={
+                "history": history,
+            },
+        )
 
 
-# class ObsProjectRefView(generic.ListView):
-#     template_name = "devex/script.html"
-#     context_object_name = "obsprojectref"
+class HistoryDetailView(generic.DetailView):
+    model = History
+    template_name = "devex/history_detail.html"
+    context_object_name = "history"
 
-#     def get_queryset(self):
-#         return ObsProjectRef.objects.order_by('last_modified').last()
+class HistoryDetailView2(generic.DetailView):
+    model = History
+    template_name = "devex/history_detailstatus.html"
+    context_object_name = "history"
+
 
 
 
@@ -320,6 +317,7 @@ def status(request: HttpRequest):
         if key in filtered_keys
     }
 
+    history = History.objects.order_by("datetime").last()
 
 
     return render(
@@ -338,6 +336,7 @@ def status(request: HttpRequest):
             "subselect_state_value": subselect_state_value,
             "filtered_state": filtered_state,
             "filtered_keys": filtered_keys,
+            "history": history,
 
         },
     )

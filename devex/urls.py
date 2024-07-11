@@ -15,6 +15,7 @@ urlpatterns = [
     path("get-status/<str:manager>/", views.get_status, name='get_status'),
     path("get-state/<str:manager>/", views.get_state, name='get_state'),
     path("script/", views.info, name='script'),
-    # path("<str:title>/"), views. , name='executed_script')
+    path("history/<int:pk>/", views.HistoryDetailView.as_view(), name='history_detail'),
+    path("recenthistory/<int:pk>/", views.HistoryDetailView2.as_view(), name='history_detailstatus'),
    
 ]

@@ -1,0 +1,35 @@
+{% extends "devex/base.html" %}
+{% block content %}
+{% load devex %}
+<h2>Script: {{ history.obsprocedure.name }}, Executed on: {{ history.datetime }} </h2>
+    <fieldset class="h-75">
+        <div class="container vh-100">
+            <div class="row h-100 ">
+        <!-- script -->
+                <div class="col border column vh-75">
+                    <div class="overflow-scroll" style=" max-height: 100%;">
+                        <legend class="sticky-top">
+                            <h3 class="fw-bold">Executed Script</h3>
+                        </legend>
+                        <ul class="list-unstyled">
+                            <li>{{ history.executed_script | highlight_python }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- log -->
+                <div class="col border column">
+                    <div class="overflow-scroll" style="max-height: 100%;">
+                        <legend class="sticky-top">
+                            <h3 class="fw-bold">Log File</h3>
+                        </legend>
+                        <ul class="list-unstyled"> 
+                            <li>{{ history.log | highlight_python }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn" style="background-color: #F4E3FF;" href="{% url 'devex:status' %}" role="button"> Back to Status Screen</a>
+    </fieldset>
+
+{% endblock %}

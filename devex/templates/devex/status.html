@@ -1,5 +1,6 @@
 {% extends "devex/base.html" %}
 {% block content %}
+{% load devex %}
     <h1>Status Screen</h1>
     <fieldset class="h-100">
         <!-- scancoordinator device -->
@@ -40,41 +41,58 @@
                     </td>
                 </tr>
             </table>
+            <h2>Script History Log</h2>
+            <table class = "table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Project Name</th>
+                        <th>Script Name</th>
+                        <th>Observer</th>
+                        <th>Operator</th>
+                        <th>Script Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.datetime }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li><a href = "{% url 'devex:history_detailstatus' history.id %}"> {{ history.obsprocedure.obsprojectref.name }}</li>
+                           
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.name }} </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.observer }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.operator }}</li>
+                           
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.status }}</li>
+                           
+                        </ul>
+                    </td>
+                </tr>
+
+            </tbody>
+            </table>
+         
         {% endblock %}
-        
-        {% comment %} 
-    <div class="row h-100 ">
-        <div class="col border column">
-            <div class="overflow-scroll" style=" max-height: 100%;">
-                <legend class="sticky-top">
-                    <h2 class="fw-bold">Device</h2>
-                </legend>
-                <ul class="list-unstyled" id="get-device" hx-get="{% url 'devex:get_device' manager %}" hx-trigger="every 10s">
-                    {% include "devex/get_device.html" %}
-                </ul>
-            </div>
-        </div>
-        <!-- status -->
-        <div class="col border column">
-            <div class="overflow-scroll" style="max-height: 100%;">
-                <legend class="sticky-top">
-                    <h2 class="fw-bold">Status</h2>
-                </legend>
-                <ul class="list-unstyled" id="get-status" hx-get="{% url 'devex:get_status' manager %}" hx-trigger="every 10s">
-                    {% include "devex/get_status.html" %}
-                </ul>
-            </div>
-        </div>
-        <!-- state-->
-        <div class="col border column">
-            <div class="overflow-scroll" style="max-height: 100%;">
-                <legend class="sticky-top">
-                    <h2 class="fw-bold">State</h2>
-                </legend>
-                <ul class="list-unstyled" id="get-state" hx-get="{% url 'devex:get_state' manager %}" hx-trigger="every 10s">
-                    {% include "devex/get_state.html" %}
-                </ul>
-            </div>
-        </div>
-    </div>
-        </fieldset> {% endcomment %}
+      

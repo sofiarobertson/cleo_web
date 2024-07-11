@@ -10,4 +10,5 @@ register = template.Library()
 
 @register.filter
 def highlight_python(value):
+
     return mark_safe(highlight(value, PythonLexer(), HtmlFormatter()))
