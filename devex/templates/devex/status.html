@@ -50,6 +50,7 @@
                         <th>Script Name</th>
                         <th>Observer</th>
                         <th>Operator</th>
+                        <th>Script State</th>
                         <th>Script Status</th>
                     </tr>
                 </thead>
@@ -85,8 +86,12 @@
                     </td>
                     <td>
                         <ul class="list-unstyled">
+                            <li>{{ history.obsprocedure.state }}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
                             <li>{{ history.obsprocedure.status }}</li>
-                           
                         </ul>
                     </td>
                 </tr>
