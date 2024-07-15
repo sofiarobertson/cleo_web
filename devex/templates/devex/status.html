@@ -1,14 +1,14 @@
 {% extends "devex/base.html" %}
 {% block content %}
 {% load devex %}
-    <h1>Status Screen</h1>
+    {% comment %} <h1>Status Screen</h1> {% endcomment %}
     <fieldset class="h-100">
         <!-- scancoordinator device -->
-        <div class="container-fluid vh-auto">
+        <div class="container vh-auto">
             <div class="row h-100 ">
                 <div class="col-4">
                     <h2>System Selection</h2>
-                    <table class = "table table-bordered">
+                    <table class = "table table-bordered fixed-table ">
                         <thead>
                             <tr>
                                 <th>Device</th>
@@ -47,7 +47,7 @@
                 <div class="col-4">
                     <h2>Project Info</h2>
                     <div>
-                        <table class = "table table-bordered">
+                        <table class = "table table-bordered custom-table">
                             <tr>
                                 <td>
                                     <table>
@@ -66,7 +66,7 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table class="custom-table">
                                         <tr>
                                             <td class="bg-danger-subtle">{{source_value}}</td>
                                         </tr>
@@ -82,7 +82,7 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table class="custom-table">
                                         <tr>
                                             <td>Scan #:</td>
                                         </tr>
@@ -98,7 +98,7 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table class="custom-table">
                                         <tr>
                                             <td class="bg-danger-subtle">{{scan_value}}</td>
                                         </tr>
@@ -117,10 +117,10 @@
                         </table>
                     </div>
                     <div>
-                        <table class = "table table-bordered">
+                        <table class = "table table-bordered custom-table">
                             <tr>
                                 <td>
-                                    <table>
+                                    <table class="custom-table">
                                         <tr>
                                             <td>Observer:</td>
                                         </tr>
@@ -176,7 +176,7 @@
                         </table>
                     </div>
                     <div>
-                        <table class = "table table-bordered">
+                        <table class = "table table-bordered custom-table">
                             <tr>
                                 <td>
                                     <table>
@@ -227,10 +227,80 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <h2>Weather*</h2>
-                    <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3" width="425" height="175" frameborder="0"></iframe>
-                    <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5" width="425" height="175" frameborder="0"></iframe>
+                    <h2>Antenna Info</h2>
+                    <div>
+                        <table class = "table table-bordered fixed-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Azimuth</th>
+                                    <th>Elevation</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr >
+                                            <td>Indicated:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Commanded:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rate('/min):</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <td>Servo Err(\"):</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="bg-primary-subtle overflow-hidden">{{azind_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-info-subtle overflow-hidden">{{azcom_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-primary-subtle overflow-hidden">{{azrate_value}}</td>
+                                        <tr>
+                                            <td class="bg-info-subtle overflow-hidden">{{azerr_value}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="bg-primary-subtle">{{elind_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-info-subtle">{{elcom_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-primary-subtle">{{elrate_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-info-subtle">{{elerr_value}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </table>
+                        </div>
                 </div>
+                <div class="row">
+                    <h2>Weather*</h2>
+                    <div class="col-4">
+                        <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3" width="425" height="175" frameborder="0"></iframe>
+                    </div>
+                    <div class="col-4">
+                        <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5" width="425" height="175" frameborder="0"></iframe>
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    </div>
                 <div class="row h-100 ">
                     <div class="col">
                         <h2>Script History Log</h2>

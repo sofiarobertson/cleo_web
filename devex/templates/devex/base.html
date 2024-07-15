@@ -100,7 +100,42 @@
         align-items: center;
         
     }
-    
+
+    .fixed-table {
+      table-layout: fixed; 
+      width: 100%;
+  }
+  
+    .fixed-table td {
+      width: 33.33%; 
+      white-space: nowrap; 
+      overflow: hidden;
+
+  }
+  
+  .custom-table {
+    table-layout: fixed; 
+    width: 100%; 
+}
+
+  .custom-table td {
+    width: 25%;
+    padding: 2px; 
+}
+
+  .custom-table td > table {
+    width: 100%; 
+    table-layout: fixed; 
+}
+
+  .custom-table td > table td {
+    white-space: nowrap; 
+    overflow: scroll;
+    text-overflow: ellipsis; 
+}
+
+
+
 
 
         </style>
