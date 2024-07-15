@@ -1,0 +1,60 @@
+<div>
+    <table class = "table table-bordered fixed-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Azimuth</th>
+                <th>Elevation</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <table>
+                    <tr >
+                        <td>Indicated:</td>
+                    </tr>
+                    <tr>
+                        <td>Commanded:</td>
+                    </tr>
+                    <tr>
+                        <td>Rate('/min):</td>
+                    </tr>
+
+                    <tr>
+                        <td>Servo Err(\"):</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="bg-primary-subtle overflow-hidden">{{azind_value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info-subtle overflow-hidden">{{azcom_value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-primary-subtle overflow-hidden">{{azrate_value}}</td>
+                    <tr>
+                        <td class="bg-info-subtle overflow-hidden">{{azerr_value}}</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="bg-primary-subtle">{{elind_value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info-subtle">{{elcom_value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-primary-subtle">{{elrate_value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info-subtle">{{elerr_value}}</td>
+                    </tr>
+                </table>
+            </td>
+        </table>
+    </div>

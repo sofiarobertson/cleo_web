@@ -17,4 +17,5 @@ urlpatterns = [
     path("script/", views.info, name='script'),
     path("history/<int:pk>/", views.HistoryDetailView.as_view(), name='history_detail'),
     path("recenthistory/<int:pk>/", views.HistoryDetailView2.as_view(), name='history_detailstatus'),
+    path("get-antenna/", views.get_antenna, name='get_antenna'),
 ]
