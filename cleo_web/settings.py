@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     "django_extensions",
+    "tortoise",
     "devex",
 ]
 
@@ -88,13 +89,22 @@ WSGI_APPLICATION = "cleo_web.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DATABASE_ROUTERS = ["cleo_web.db_routers.DbRouter"]
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        **env.db("DJANGO_DB_URL"),
+        "CONN_MAX_AGE": 3600,
+        "TEST": {"DEPENDENCIES": []},
+    },
+    "turtle": {
+        **env.db("TURTLE_DB_URL"),
+        "OPTIONS": {"sql_mode": "STRICT_ALL_TABLES"},
+        "CONN_MAX_AGE": 3600,
+        "TIME_ZONE": "UTC",
+        "TEST": {"DEPENDENCIES": []},
+    },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

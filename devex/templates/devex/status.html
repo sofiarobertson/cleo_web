@@ -1,52 +1,295 @@
 {% extends "devex/base.html" %}
 {% block content %}
+{% load devex %}
     <h1>Status Screen</h1>
     <fieldset class="h-100">
         <!-- scancoordinator device -->
         <div class="container-fluid vh-auto">
-            <h2>System Selection</h2>
             <div class="row h-100 ">
-                <div class="col border column">
-                    <div class="overflow-scroll" style=" max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">Device</h2>
-                        </legend>
-                        <ul class="list-unstyled"
-                            id="get-device"
-                            hx-get="{% url 'devex:get_device' manager %}"
-                            hx-trigger="every 10s">
-                            {% include "devex/get_device.html" %}
-                        </ul>
+                <div class="col-4">
+                    <h2>System Selection</h2>
+                    <table class = "table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Status</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <ul class="list-unstyled"
+                                    id="get-device"
+                                    hx-get="{% url 'devex:get_device' manager %}"
+                                    hx-trigger="every 1s">
+                                    {% include "devex/get_device.html" %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled"
+                                    id="get-status"
+                                    hx-get="{% url 'devex:get_status' manager %}"
+                                    hx-trigger="every 1s">
+                                    {% include "devex/get_status.html" %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled"
+                                    id="get-state"
+                                    hx-get="{% url 'devex:get_state' manager %}"
+                                    hx-trigger="every 1s">
+                                    {% include "devex/get_state.html" %}
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-4">
+                    <h2>Project Info</h2>
+                    <div>
+                        <table class = "table table-bordered">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Source:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Project:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Countdown:</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="bg-danger-subtle">{{source_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #FDB9C8;">{{projectId_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-danger-subtle">{{start_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>---</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Scan #:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SS Master:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Length:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Remaining:</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="bg-danger-subtle">{{scan_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #FDB9C8;">{{ssmaster_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-danger-subtle">{{length_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #FDB9C8;">{{remain_value}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class = "table table-bordered">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Observer:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Obs.Type:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Proc Name:</td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Operator:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Switching:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sequence:</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td> astrid info</td>
+                                        </tr>
+                                        <tr>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class = "table table-bordered">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Rest Freq:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Frame:</td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class=" bg-danger-subtle">{{restFreq_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #FDB9C8;">{{restFrame_value}}</td>
+                                        </tr>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Velocity:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vel Def:</td>
+                                        </tr>
+ 
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="bg-danger-subtle">{{velocity_value}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #FDB9C8;">{{veldef_value}}</td>
+                                        </tr>
+                    
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <!-- status -->
-                <div class="col border column">
-                    <div class="overflow-scroll" style="max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">Status</h2>
-                        </legend>
-                        <ul class="list-unstyled"
-                            id="get-status"
-                            hx-get="{% url 'devex:get_status' manager %}"
-                            hx-trigger="every 10s">
-                            {% include "devex/get_status.html" %}
-                        </ul>
+                <div class="col-4">
+                    <h2>Weather*</h2>
+                    <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3" width="425" height="175" frameborder="0"></iframe>
+                    <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5" width="425" height="175" frameborder="0"></iframe>
+                </div>
+                <div class="row h-100 ">
+                    <div class="col">
+                        <h2>Script History Log</h2>
+                        <table class = "table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Project Name</th>
+                                    <th>Script Name</th>
+                                    <th>Observer</th>
+                                    <th>Operator</th>
+                                    <th>Script State</th>
+                                    <th>Script Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <li>{{ history.datetime }}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href = "{% url 'devex:history_detailstatus' history.id %}"> {{ history.obsprocedure.obsprojectref.name }}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li>{{ history.obsprocedure.name }}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li>{{ history.obsprocedure.observer }}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li>{{ history.obsprocedure.operator }}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li>{{ history.obsprocedure.state }}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li>{{ history.obsprocedure.status }}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <!-- state-->
-                <div class="col border column">
-                    <div class="overflow-scroll" style="max-height: 100%;">
-                        <legend class="sticky-top">
-                            <h2 class="fw-bold">State</h2>
-                        </legend>
-                        <ul class="list-unstyled"
-                            id="get-state"
-                            hx-get="{% url 'devex:get_state' manager %}"
-                            hx-trigger="every 10s">
-                            {% include "devex/get_state.html" %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    {% endblock %}
+                <p>*http://grafana.gb.nrao.edu</p>
+                {% endblock %}

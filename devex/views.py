@@ -1,8 +1,46 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import render
 from zmqgc import ZMQGrailClient as ChaliceClient
-
+from tortoise.models import History, ObsProcedure, ObsProjectRef, Observer, Operator
+from django.views import generic
 from django.conf import settings
+
+
+
+def info(request):
+    histories = History.objects.order_by("-datetime")[:10]
+
+    return render(
+            request,
+            "devex/script.html",
+            context={
+                "histories": histories,
+            }
+        )
+
+
+def status_info(request):
+    history = History.objects.order_by("datetime").last()
+    return render(
+            request,
+            "devex/script.html",
+            context={
+                "history": history,
+            },
+        )
+
+
+class HistoryDetailView(generic.DetailView):
+    model = History
+    template_name = "devex/history_detail.html"
+    context_object_name = "history"
+
+class HistoryDetailView2(generic.DetailView):
+    model = History
+    template_name = "devex/history_detailstatus.html"
+    context_object_name = "history"
 
 
 def get_available_managers(chalice_client: ChaliceClient):
@@ -130,8 +168,13 @@ def devex(request: HttpRequest):
             for k, v in selected_manager_samplers[selected_sampler].items()
             if k not in ["id", "name", "description", "type"]
         }
-        is_struct = selected_manager_samplers[selected_sampler][selected_sampler].get("type", None) == "STRUCT"
-        if is_struct:
+        foo = selected_manager_samplers[selected_sampler]
+        try:
+            foo[selected_sampler].get("type", None) == "STRUCT"
+        except AttributeError:
+            selected_sampler_info = {"nope": "TBD"}
+
+        else:
             selected_sampler_info = {
                 k: v
                 for k, v in selected_sampler_info[selected_sampler].items()
@@ -175,8 +218,6 @@ def devex(request: HttpRequest):
     )
 
 
-
-
 def get_device(request, manager):
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
     manager = "ScanCoordinator"
@@ -191,8 +232,6 @@ def get_device(request, manager):
     }
 
     return render(request, "devex/get_device.html", context={"filtered_device": filtered_device})
-
-
 
 
 def get_state(request, manager):
@@ -275,6 +314,65 @@ def status(request: HttpRequest):
     }
 
 
+# history log 
+    history = History.objects.order_by("datetime").last()
+
+
+# top right corner of status screen (project info)
+    source = selected_manager_params.get("source")
+    source_value = source.get("value")
+
+    projectId = selected_manager_params.get("projectId")
+    projectId2 = projectId.get("projectId")
+    projectId_value = projectId2.get("value")
+
+    start = selected_manager_params.get("startTime")
+    start_field = start.get("startTime")
+    start_field2 = start_field.get("seconds")
+    start_value = start_field2.get("value")
+
+    scannumber = selected_manager_params.get("scanNumber")
+    scannumber2 = scannumber.get("scanNumber")
+    scan_value = scannumber2.get("value")
+
+    ssmaster = selected_manager_params.get("switching_signals_master")
+    ssmaster2 = ssmaster.get("switching_signals_master")
+    ssmaster_value = ssmaster2.get("value")
+
+    length = selected_manager_params.get("scanLength")
+    length_field = length.get("scanLength")
+    length_field2 = length_field.get("seconds")
+    length_value = length_field2.get("value")
+
+    remain = selected_manager_params.get("scanRemaining")
+    remain_field = remain.get("scanRemaining")
+    remain_field2 = remain_field.get("seconds")
+    remain_value = remain_field2.get("value")
+
+
+    manager2 = "LO1"
+    selected_manager_params2 = get_params_for_manager(cc, manager2)
+    restFreq = selected_manager_params2.get("restFrequency")
+    restFreq2 = restFreq.get("restFrequency")
+    restFreq_value = restFreq2.get("value")
+
+    restFrame = selected_manager_params2.get("restFrame")
+    restFrame2 = restFrame.get("restFrame")
+    restFrame_value = restFrame2.get("value")
+
+    velocity = selected_manager_params2.get("sourceVelocity")
+    getvelocity = velocity.get("sourceVelocity")
+    velocity2 = getvelocity.get("theVelocity")
+    velocitypos = velocity2.get("pos")
+    velocity_value = velocitypos.get("value")
+
+    veldef = selected_manager_params2.get("velocityDefinition")
+    veldef2 = veldef.get("velocityDefinition")
+    veldef_value = veldef2.get("value")
+
+
+
+
 
     return render(
         request,
@@ -292,6 +390,19 @@ def status(request: HttpRequest):
             "subselect_state_value": subselect_state_value,
             "filtered_state": filtered_state,
             "filtered_keys": filtered_keys,
+            "history": history,
+            "source_value":source_value,
+            "projectId_value":projectId_value,
+            "start_value":start_value,
+            "scan_value":scan_value,
+            "ssmaster_value":ssmaster_value,
+            "length_value":length_value,
+            "remain_value":remain_value,
+            "restFreq_value":restFreq_value,
+            "restFrame_value":restFrame_value,
+            "velocity_value":velocity_value,
+            "veldef_value":veldef_value,
+
 
         },
     )

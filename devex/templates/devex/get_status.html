@@ -1,5 +1,6 @@
 {% for __, status in filtered_status.items %}
-    <li {% if status == "Error" %}class="bg-danger-subtle"{% endif %}
-        {% if status == "Warning" %}class="bg-warning-subtle"{% endif %}
-        class="border-top border-bottom">{{ status }}</li>
+    <li {% if status == "Error" %}style="mb-2 border-bottom background-color: #ED9121;"{% endif %}
+        {% if status == "Warning" %}class="mb-2 border-bottom bg-warning-subtle"{% endif %}
+        {% if status == "Fault" %}class="mb-2 border-bottom bg-danger"{% endif %}
+        class="mb-2 border-bottom">{{ status }}</li>
 {% endfor %}
