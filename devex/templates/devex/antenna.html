@@ -1,4 +1,10 @@
-<div>
+{% extends "devex/base.html" %}
+{% block content %}
+{% load devex %}
+<div class="container vh-auto">
+    <div class="row h-100">
+        <div class="col-6">
+            <h2 class="fw-bold text-center">Encoder</h2>
     <table class = "table table-bordered fixed-table">
         <thead>
             <tr>
@@ -19,9 +25,7 @@
                     <tr>
                         <td>Rate('/min):</td>
                     </tr>
-                    {% comment %} <tr>
-                        <td>Difference:</td>
-                    </tr> {% endcomment %}
+
                     <tr>
                         <td>Servo Err(\"):</td>
                     </tr>
@@ -37,11 +41,7 @@
                     </tr>
                     <tr>
                         <td class="bg-primary-subtle overflow-hidden">{{azrate_value | floatformat:3 }}</td>
-                    </tr>
-                    {% comment %} <tr>
-                        <td class="bg-info-subtle overflow-hidden">{{ azcom_value | add:"-azind_value" }}</td>
-                    </tr> {% endcomment %}
-                        <tr>
+                    <tr>
                         <td class="bg-info-subtle overflow-hidden">{{azerr_value | floatformat:3 }}</td>
                     </tr>
                 </table>
@@ -57,13 +57,65 @@
                     <tr>
                         <td class="bg-primary-subtle">{{elrate_value | floatformat:3 }}</td>
                     </tr>
-                    {% comment %} <tr>
-                        <td class="bg-info-subtle">{{ eldif | floatformat:3 }}</td>
-                    </tr> {% endcomment %}
                     <tr>
                         <td class="bg-info-subtle">{{elerr_value | floatformat:3 }}</td>
                     </tr>
                 </table>
             </td>
         </table>
+    <h2 class="fw-bold text-center">J2000</h2>
+    <table class = "table table-bordered fixed-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Right Ascension</th>
+                <th>Declination</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <table>
+                    <tr >
+                        <td>Indicated:</td>
+                    </tr>
+                    <tr>
+                        <td>Commanded:</td>
+                    </tr>
+                    <tr>
+                        <td>Rate('/min):</td>
+                    </tr>
+
+
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="bg-primary-subtle overflow-hidden">{{ raind_value | degrees_to_ra }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info-subtle overflow-hidden">{{azcom_value | floatformat:3 }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-primary-subtle overflow-hidden">{{azrate_value | floatformat:3 }}</td>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="bg-primary-subtle">{{elind_value | floatformat:3 }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info-subtle">{{elcom_value | floatformat:3 }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-primary-subtle">{{elrate_value | floatformat:3 }}</td>
+                    </tr>
+                </table>
+            </td>
+        </table>
     </div>
+<div class="col-6">
+    
+</div>
+{% endblock %}

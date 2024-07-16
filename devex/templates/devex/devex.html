@@ -1,11 +1,11 @@
 {% extends "devex/base.html" %}
 {% block content %}
-    <h1>Device Explorer</h1>
+    {% comment %} <h1>Device Explorer</h1> {% endcomment %}
     <fieldset class="h-100">
         <!-- Avalabie managers -->
-        <div class="container-fluid vh-100">
+        <div class="parent-container vh-100">
             <div class="row h-100 ">
-                <div class="col border column">
+                <div class="col  column">
                     <div class="overflow-scroll" style=" max-height: 100%;">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Available Managers</h2>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <!-- Parameters -->
-                <div class="col border column">
+                <div class="col border-end border-start column">
                     <div class="overflow-scroll" style="max-height: 100%;">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Parameters:</h2>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <!-- Parameter Fields and Attributes-->
-                <div class="col border column">
+                <div class="col border-end border-start column">
                     <div class="first-row">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Parameter Fields:</h2>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <!-- Samplers -->
-                <div class="col border column">
+                <div class="col border-end border-start column">
                     <div class="overflow-scroll" style="max-height: 100%;">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Samplers:</h2>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <!-- Sampler Fields and Attributes-->
-                <div class="col border column">
+                <div class="col column">
                     <div class="first-row">
                         <legend class="sticky-top">
                             <h2 class="fw-bold">Sampler Fields:</h2>

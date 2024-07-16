@@ -84,7 +84,14 @@
       .sticky-top {
         position: sticky;
         background-color: white;
+        z-index: 2;
 
+      }
+
+      .parent-container {
+        position: relative;
+        z-index: 1
+       
       }
 
       .center {
@@ -133,7 +140,10 @@
     overflow: scroll;
     text-overflow: ellipsis; 
 }
-
+.dropdown-menu {
+  position: absolute;
+  z-index: 20;
+}
 
 
 
@@ -152,9 +162,9 @@
                 integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
                 crossorigin="anonymous"></script>
     </head>
-    <body class="vh-100">
-        <div class="container" style="height: 100vh;">
-          {% include 'devex/navbar.html' %}
+    <body>
+        <div class="container">
+            {% include 'devex/navbar.html' %}
             {% block content %}{% endblock %}
         </div>
     </body>

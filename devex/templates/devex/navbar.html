@@ -1,17 +1,42 @@
-
-<nav class="navbar navbar-expand-lg " style="background-color: #F4E3FF;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'devex:home' %}"><img src="https://greenbankobservatory.org/wp-content/uploads/2020/05/vertical-PGGradient.svg" alt="" width="50" height="50">CLEO Web</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="{% url 'devex:devex' %}">Device Explorer</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'devex:status' %}">Status Screen</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'devex:script' %}">Script Executions</a></li>
-      </ul>
-  </div>
-  </div>
-</nav>
-
+</style>
+<nav class="navbar navbar-expand-lg" style="background-color: #F4E3FF;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'devex:home' %}">
+            <img src="https://greenbankobservatory.org/wp-content/uploads/2020/05/vertical-PGGradient.svg"
+                 alt=""
+                 width="40"
+                 height="40">
+        CHIP Web</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'devex:devex' %}">Device Explorer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'devex:status' %}">Status Screen</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">Misc.</a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'devex:script' %}">AstrID Script Executions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'devex:antenna' %}">Antenna Monitor</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>

@@ -1,11 +1,22 @@
 {% extends "devex/base.html" %}
 {% block content %}
-{% load static %} 
-<h1 class="text-center"> Consolidated Hub for GBO Information and Parameters (CHIP)</h1>
-<img src="{% static "chip.jpg" %}"  width="50" height="150"class="center">
-<ul class = "wrapper list-unstyled">
-<li class="p-3"><a class="btn btn-success" href="{% url 'devex:devex' %}" role="button">Device Explorer</a></li>
-    <li class="p-3"><a class="btn btn-success" href="{% url 'devex:status' %}" role="button">Status Screen</a></li>
-        <li class="p-3"><a class="btn btn-success" href="{% url 'devex:script' %}" role="button">AstrID Script Info</a></li>
-</ul>
+    {% load static %}
+    <h1 class="text-center">Consolidated Hub for GBO Information and Parameters (CHIP)</h1>
+    <img src="{% static "chip.jpg" %}"  width="50" height="150"class="center">
+    <ul class = "wrapper list-unstyled">
+        <li class="p-3">
+            <a class="btn btn-success" href="{% url 'devex:devex' %}" role="button">Device Explorer</a>
+        </li>
+        <li class="p-3">
+            <a class="btn btn-success" href="{% url 'devex:status' %}" role="button">Status Screen</a>
+        </li>
+        <li class="p-3">
+            <a class="btn btn-success" href="{% url 'devex:script' %}" role="button">AstrID Script Info</a>
+        </li>
+        <li class="p-3">
+            <a class="btn btn-success"
+               href="{% url 'devex:antenna' %}"
+               role="button">Antenna Monitor</a>
+        </li>
+    </ul>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends "devex/base.html" %}
 {% block content %}
-{% load devex %}
+    {% load devex %}
     {% comment %} <h1>Status Screen</h1> {% endcomment %}
     <fieldset class="h-100">
         <!-- scancoordinator device -->
         <div class="container vh-auto">
             <div class="row h-100 ">
                 <div class="col-4">
-                    <h2>System Selection</h2>
-                    <table class = "table table-bordered fixed-table ">
+                    <h2 class="fw-bold">System Selection</h2>
+                    <table class = "table table-bordered fixed-table">
                         <thead>
                             <tr>
                                 <th>Device</th>
@@ -45,211 +45,24 @@
                     </table>
                 </div>
                 <div class="col-4">
-                    <h2>Project Info</h2>
-                    <div>
-                        <table class = "table table-bordered custom-table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>Source:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Project:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Start:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Countdown:</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table class="custom-table">
-                                        <tr>
-                                            <td class="bg-danger-subtle">{{source_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #FDB9C8;">{{projectId_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bg-danger-subtle">{{start_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>---</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table class="custom-table">
-                                        <tr>
-                                            <td>Scan #:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>SS Master:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Length:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Remaining:</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table class="custom-table">
-                                        <tr>
-                                            <td class="bg-danger-subtle">{{scan_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #FDB9C8;">{{ssmaster_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bg-danger-subtle">{{length_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #FDB9C8;">{{remain_value}}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div>
-                        <table class = "table table-bordered custom-table">
-                            <tr>
-                                <td>
-                                    <table class="custom-table">
-                                        <tr>
-                                            <td>Observer:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Obs.Type:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Proc Name:</td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>Operator:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Switching:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sequence:</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td> astrid info</td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div>
-                        <table class = "table table-bordered custom-table">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>Rest Freq:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Frame:</td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td class=" bg-danger-subtle">{{restFreq_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #FDB9C8;">{{restFrame_value}}</td>
-                                        </tr>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>Velocity:</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vel Def:</td>
-                                        </tr>
- 
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td class="bg-danger-subtle">{{velocity_value}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #FDB9C8;">{{veldef_value}}</td>
-                                        </tr>
-                    
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <h2 class="fw-bold">Project Info</h2>
+                    <ul class="list-unstyled"
+                        id="get-project"
+                        hx-get="{% url 'devex:get_project' %}"
+                        hx-trigger="every 5s">
+                        {% include "devex/get_project.html" %}
+                    </ul>
                 </div>
                 <div class="col-4">
-                    <h2>Antenna Info</h2>
+                    <h2 class="fw-bold">Antenna Info</h2>
                     <ul class="list-unstyled"
-                    id="get-antenna"
-                    hx-get="{% url 'devex:get_antenna' %}"
-                    hx-trigger="every 1s">
-                    {% include "devex/get_antenna.html" %}
-                </ul>
-                </div>
-                <div class="row">
-                    <h2>Weather*</h2>
-                    <div class="col-4">
-                        <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3" width="425" height="175" frameborder="0"></iframe>
-                    </div>
-                    <div class="col-4">
-                        <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5" width="425" height="175" frameborder="0"></iframe>
-                    </div>
-                    <div class="col-4">
-
-                    </div>
-                    </div>
-                <div class="row h-100 ">
-                    <div class="col">
-                        <h2>Script History Log</h2>
+                        id="get-antenna"
+                        hx-get="{% url 'devex:get_antenna' %}"
+                        hx-trigger="every 1s">
+                        {% include "devex/get_antenna.html" %}
+                    </ul>
+                    <h2 class="fw-bold">Recent History Log</h2>
+                    <div class = "overflow-x-scroll">
                         <table class = "table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -306,6 +119,22 @@
                             </table>
                         </div>
                     </div>
+                    <div class="row">
+                        <h2 class=" fw-bold">Weather*</h2>
+                        <div class="col-4">
+                            <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3"
+                                    width="425"
+                                    height="175"
+                                    frameborder="0"></iframe>
+                        </div>
+                        <div class="col-4">
+                            <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5"
+                                    width="425"
+                                    height="175"
+                                    frameborder="0"></iframe>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
                 </div>
                 <p>*http://grafana.gb.nrao.edu</p>
-                {% endblock %}
+            {% endblock %}

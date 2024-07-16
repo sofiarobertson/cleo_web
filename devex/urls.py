@@ -18,4 +18,6 @@ urlpatterns = [
     path("history/<int:pk>/", views.HistoryDetailView.as_view(), name='history_detail'),
     path("recenthistory/<int:pk>/", views.HistoryDetailView2.as_view(), name='history_detailstatus'),
     path("get-antenna/", views.get_antenna, name='get_antenna'),
+    path("get-project/", views.get_project, name='get_project'),
+    path("antenna/", views.antenna, name='antenna'),
 ]
