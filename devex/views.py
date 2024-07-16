@@ -6,6 +6,10 @@ from zmqgc import ZMQGrailClient as ChaliceClient
 from tortoise.models import History, ObsProcedure, ObsProjectRef, Observer, Operator
 from django.views import generic
 from django.conf import settings
+from alda.atoll.models import Article, ArticleRef, ArticleType, AstridScript, ExecutedAstridScript, McDevice, McHost, McMessage, McMessageTemplate, MetaProject, Person
+from alda.audit.models import FileHost, FileImportAttempt, FileImporter
+from alda.disk.models import DataProduct, DataProductType, DataTransfer, DataTransferGroup, FitsFile, FitsHeader, Manager, ManagerFolder, Problem, Project, Scan, ScanLog, ScanLogFile, ScanLogManagerFolder, ScanLogScan, SessionExport, SessionFile, SessionImport, SessionPart, SessionPartExport, SessionPartImport, Stats
+
 
 
 
@@ -456,7 +460,7 @@ def status(request: HttpRequest):
 
 
 # history log 
-    history = History.objects.order_by("datetime").last()
+    # history = History.objects.order_by("datetime").last()
 
 
 # project info
@@ -584,7 +588,7 @@ def status(request: HttpRequest):
             "subselect_state_value": subselect_state_value,
             "filtered_state": filtered_state,
             "filtered_keys": filtered_keys,
-            "history": history,
+            # "history": history,
             "source_value":source_value,
             "projectId_value":projectId_value,
             "start_value":start_value,
@@ -619,11 +623,27 @@ def home(request):
             "devex/home.html")
 
 
+def messages(request: HttpRequest):
+    messages = McMessage.objects.first()
+
+    return render(
+                request,
+                "devex/messages.html",
+                context={
+                    "messages": messages,
+                }
+            )
+
+
+
+
 def antenna(request:HttpRequest):
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
 
     manager3 = "Antenna.AntennaManager"
     selected_manager_samplers = get_samplers_for_manager(cc, manager3)
+
+#Azimuth Values (indicated, commanded, rate, error)  
     azind = selected_manager_samplers.get("ccuData")
     azind2 = azind.get("ccuData")
     azind3 = azind2.get("AzEncoder")
@@ -648,6 +668,7 @@ def antenna(request:HttpRequest):
     azerr_error = azerr3.get("error")
     azerr_value = azerr_error.get("value")
 
+#Elavation Values (indicated, commanded, rate, error)
     elind = selected_manager_samplers.get("ccuData")
     elind2 = elind.get("ccuData")
     elind3 = elind2.get("ElEncoder")
@@ -672,11 +693,81 @@ def antenna(request:HttpRequest):
     elerr_error = elerr3.get("error")
     elerr_value = elerr_error.get("value")
 
+#Right Ascension Values (indicated, commanded, rate)
     raind = selected_manager_samplers.get("ccuData")
     raind2 = raind.get("ccuData")
     raind3 = raind2.get("RaJ2000")
     raind_indicated = raind3.get("indicated")
     raind_value = raind_indicated.get("value")
+
+    racom = selected_manager_samplers.get("ccuData")
+    racom2 = racom.get("ccuData")
+    racom3 = racom2.get("RaJ2000")
+    racom_indicated = racom3.get("commanded")
+    racom_value = racom_indicated.get("value")
+
+    rarate = selected_manager_samplers.get("ccuData")
+    rarate2 = rarate.get("ccuData")
+    rarate3 = rarate2.get("RaJ2000")
+    rarate_indicated = rarate3.get("rate")
+    rarate_value = rarate_indicated.get("value")
+
+#Declination Values (indicated, commanded, rate)
+    dcind = selected_manager_samplers.get("ccuData")
+    dcind2 = dcind.get("ccuData")
+    dcind3 = dcind2.get("DcJ2000")
+    dcind_indicated = dcind3.get("indicated")
+    dcind_value = dcind_indicated.get("value")
+
+    dccom = selected_manager_samplers.get("ccuData")
+    dccom2 = dccom.get("ccuData")
+    dccom3 = dccom2.get("DcJ2000")
+    dccom_indicated = dccom3.get("indicated")
+    dccom_value = dccom_indicated.get("value")
+
+    dcrate = selected_manager_samplers.get("ccuData")
+    dcrate2 = dcrate.get("ccuData")
+    dcrate3 = dcrate2.get("DcJ2000")
+    dcrate_indicated = dcrate3.get("indicated")
+    dcrate_value = dcrate_indicated.get("value")
+
+#Longitude Values (indicated, commanded, rate)
+    loind = selected_manager_samplers.get("ccuData")
+    loind2 = loind.get("ccuData")
+    loind3 = loind2.get("Gal_L")
+    loind_indicated = loind3.get("indicated")
+    loind_value = loind_indicated.get("value")
+
+    locom = selected_manager_samplers.get("ccuData")
+    locom2 = locom.get("ccuData")
+    locom3 = locom2.get("Gal_L")
+    locom_commanded = locom3.get("commanded")
+    locom_value = locom_commanded.get("value")
+
+    lorate = selected_manager_samplers.get("ccuData")
+    lorate2 = lorate.get("ccuData")
+    lorate3 = lorate2.get("Gal_L")
+    lorate_rate = lorate3.get("rate")
+    lorate_value = lorate_rate.get("value")
+
+#Latitude Values (indicated, commanded, rate)
+    laind = selected_manager_samplers.get("ccuData")
+    laind2 = laind.get("ccuData")
+    laind3 = laind2.get("Gal_B")
+    laind_indicated = laind3.get("indicated")
+    laind_value = laind_indicated.get("value")
+
+    lacom = selected_manager_samplers.get("ccuData")
+    lacom2 = lacom.get("ccuData")
+    lacom3 = lacom2.get("Gal_B")
+    lacom_commanded = lacom3.get("commanded")
+    lacom_value = lacom_commanded.get("value")
+
+    larate = selected_manager_samplers.get("ccuData")
+    larate2 = larate.get("ccuData")
+    larate3 = larate2.get("Gal_B")
+    larate_rate = larate3.get("rate")
+    larate_value = larate_rate.get("value")
 
     return render(
         request,
@@ -691,5 +782,178 @@ def antenna(request:HttpRequest):
             "elrate_value":elrate_value,
             "elerr_value":elerr_value,
             "raind_value":raind_value,
+            "dcind_value":dcind_value,
+            "racom_value":racom_value,
+            "rarate_value":rarate_value,
+            "dccom_value":dccom_value,
+            "dcrate_value":dcrate_value,
+            "loind_value":loind_value,
+            "locom_value":locom_value,
+            "lorate_value":lorate_value,
+            "laind_value":laind_value,
+            "lacom_value":lacom_value,
+            "larate_value":larate_value,
+
+        },
+    )
+
+
+def get_antenna_main(request:HttpRequest):
+    cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
+
+    manager3 = "Antenna.AntennaManager"
+    selected_manager_samplers = get_samplers_for_manager(cc, manager3)
+
+#Azimuth Values (indicated, commanded, rate, error)  
+    azind = selected_manager_samplers.get("ccuData")
+    azind2 = azind.get("ccuData")
+    azind3 = azind2.get("AzEncoder")
+    azind_indicated = azind3.get("indicated")
+    azind_value = azind_indicated.get("value")
+
+    azcom = selected_manager_samplers.get("ccuData")
+    azcom2 = azcom.get("ccuData")
+    azcom3 = azcom2.get("AzEncoder")
+    azcom_commanded = azcom3.get("commanded")
+    azcom_value = azcom_commanded.get("value")
+
+    azrate = selected_manager_samplers.get("ccuData")
+    azrate2 = azrate.get("ccuData")
+    azrate3 = azrate2.get("AzEncoder")
+    azrate_rate = azrate3.get("rate")
+    azrate_value = azrate_rate.get("value")
+
+    azerr = selected_manager_samplers.get("ccuData")
+    azerr2 = azerr.get("ccuData")
+    azerr3 = azerr2.get("AzEncoder")
+    azerr_error = azerr3.get("error")
+    azerr_value = azerr_error.get("value")
+
+#Elavation Values (indicated, commanded, rate, error)
+    elind = selected_manager_samplers.get("ccuData")
+    elind2 = elind.get("ccuData")
+    elind3 = elind2.get("ElEncoder")
+    elind_indicated = elind3.get("indicated")
+    elind_value = elind_indicated.get("value")
+
+    elcom = selected_manager_samplers.get("ccuData")
+    elcom2 = elcom.get("ccuData")
+    elcom3 = elcom2.get("ElEncoder")
+    elcom_commanded = elcom3.get("commanded")
+    elcom_value = elcom_commanded.get("value")
+
+    elrate = selected_manager_samplers.get("ccuData")
+    elrate2 = elrate.get("ccuData")
+    elrate3 = elrate2.get("ElEncoder")
+    elrate_rate = elrate3.get("rate")
+    elrate_value = elrate_rate.get("value")
+
+    elerr = selected_manager_samplers.get("ccuData")
+    elerr2 = elerr.get("ccuData")
+    elerr3 = elerr2.get("ElEncoder")
+    elerr_error = elerr3.get("error")
+    elerr_value = elerr_error.get("value")
+
+#Right Ascension Values (indicated, commanded, rate)
+    raind = selected_manager_samplers.get("ccuData")
+    raind2 = raind.get("ccuData")
+    raind3 = raind2.get("RaJ2000")
+    raind_indicated = raind3.get("indicated")
+    raind_value = raind_indicated.get("value")
+
+    racom = selected_manager_samplers.get("ccuData")
+    racom2 = racom.get("ccuData")
+    racom3 = racom2.get("RaJ2000")
+    racom_indicated = racom3.get("commanded")
+    racom_value = racom_indicated.get("value")
+
+    rarate = selected_manager_samplers.get("ccuData")
+    rarate2 = rarate.get("ccuData")
+    rarate3 = rarate2.get("RaJ2000")
+    rarate_indicated = rarate3.get("rate")
+    rarate_value = rarate_indicated.get("value")
+
+#Declination Values (indicated, commanded, rate)
+    dcind = selected_manager_samplers.get("ccuData")
+    dcind2 = dcind.get("ccuData")
+    dcind3 = dcind2.get("DcJ2000")
+    dcind_indicated = dcind3.get("indicated")
+    dcind_value = dcind_indicated.get("value")
+
+    dccom = selected_manager_samplers.get("ccuData")
+    dccom2 = dccom.get("ccuData")
+    dccom3 = dccom2.get("DcJ2000")
+    dccom_indicated = dccom3.get("indicated")
+    dccom_value = dccom_indicated.get("value")
+
+    dcrate = selected_manager_samplers.get("ccuData")
+    dcrate2 = dcrate.get("ccuData")
+    dcrate3 = dcrate2.get("DcJ2000")
+    dcrate_indicated = dcrate3.get("indicated")
+    dcrate_value = dcrate_indicated.get("value")
+
+#Longitude Values (indicated, commanded, rate)
+    loind = selected_manager_samplers.get("ccuData")
+    loind2 = loind.get("ccuData")
+    loind3 = loind2.get("Gal_L")
+    loind_indicated = loind3.get("indicated")
+    loind_value = loind_indicated.get("value")
+
+    locom = selected_manager_samplers.get("ccuData")
+    locom2 = locom.get("ccuData")
+    locom3 = locom2.get("Gal_L")
+    locom_commanded = locom3.get("commanded")
+    locom_value = locom_commanded.get("value")
+
+    lorate = selected_manager_samplers.get("ccuData")
+    lorate2 = lorate.get("ccuData")
+    lorate3 = lorate2.get("Gal_L")
+    lorate_rate = lorate3.get("rate")
+    lorate_value = lorate_rate.get("value")
+
+#Latitude Values (indicated, commanded, rate)
+    laind = selected_manager_samplers.get("ccuData")
+    laind2 = laind.get("ccuData")
+    laind3 = laind2.get("Gal_B")
+    laind_indicated = laind3.get("indicated")
+    laind_value = laind_indicated.get("value")
+
+    lacom = selected_manager_samplers.get("ccuData")
+    lacom2 = lacom.get("ccuData")
+    lacom3 = lacom2.get("Gal_B")
+    lacom_commanded = lacom3.get("commanded")
+    lacom_value = lacom_commanded.get("value")
+
+    larate = selected_manager_samplers.get("ccuData")
+    larate2 = larate.get("ccuData")
+    larate3 = larate2.get("Gal_B")
+    larate_rate = larate3.get("rate")
+    larate_value = larate_rate.get("value")
+
+    return render(
+        request,
+        "devex/get_antenna_main.html",
+        context={
+            "azind_value":azind_value,
+            "azcom_value":azcom_value,
+            "azrate_value":azrate_value,
+            "azerr_value":azerr_value,
+            "elind_value":elind_value,
+            "elcom_value":elcom_value,
+            "elrate_value":elrate_value,
+            "elerr_value":elerr_value,
+            "raind_value":raind_value,
+            "dcind_value":dcind_value,
+            "racom_value":racom_value,
+            "rarate_value":rarate_value,
+            "dccom_value":dccom_value,
+            "dcrate_value":dcrate_value,
+            "loind_value":loind_value,
+            "locom_value":locom_value,
+            "lorate_value":lorate_value,
+            "laind_value":laind_value,
+            "lacom_value":lacom_value,
+            "larate_value":larate_value,
+
         },
     )

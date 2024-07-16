@@ -18,6 +18,10 @@ class DbRouter:
         "admin": "default",
         "sessions": "default",
         "sites": "default",
+
+        "atoll": "alda",
+        "disk": "alda",
+        "audit": "alda",
     }
 
     def db_for_read(self, model, **hints):

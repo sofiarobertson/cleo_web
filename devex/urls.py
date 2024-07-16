@@ -20,4 +20,6 @@ urlpatterns = [
     path("get-antenna/", views.get_antenna, name='get_antenna'),
     path("get-project/", views.get_project, name='get_project'),
     path("antenna/", views.antenna, name='antenna'),
+    path("get-antenna-main/", views.get_antenna_main, name='get_antenna_main'),
+    path("messages/", views.messages, name='messages'),
 ]
