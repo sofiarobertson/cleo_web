@@ -44,10 +44,15 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "pgtrigger",
     "debug_toolbar",
     "django_extensions",
+    "alda.audit",
+    "alda.atoll",
+    "alda.disk",
     "tortoise",
     "devex",
 ]
@@ -104,6 +109,9 @@ DATABASES = {
         "TIME_ZONE": "UTC",
         "TEST": {"DEPENDENCIES": []},
     },
+    "alda": {
+        **env.db("ALDA_DB_URL"),
+    }
 }
 
 # Password validation
