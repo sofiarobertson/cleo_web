@@ -463,7 +463,7 @@ def status(request: HttpRequest):
     # history = History.objects.order_by("datetime").last()
 
 #CLEO messages
-    message = McMessage.objects.last()
+    message = McMessage.objects.order_by("-sort_time")[:2]
 
 
 # project info
@@ -650,11 +650,11 @@ def get_messages(request):
             )
 
 def get_messages_main(request):
-    message = McMessage.objects.last()
+    message = McMessage.objects.order_by("-sort_time")[:2]
 
     return render(
                 request,
-                "devex/status.html",
+                "devex/get_messages_main.html",
                 context={
                     "message": message,
                 }

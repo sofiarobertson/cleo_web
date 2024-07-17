@@ -36,3 +36,11 @@ def degrees_to_dec(degrees):
     dec = f"{degrees_int}:{arcminutes}:{arcseconds:.2f}"
 
     return f"{dec}"
+
+@register.filter
+def seconds_to_hours(seconds):
+    hours = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return '{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds))

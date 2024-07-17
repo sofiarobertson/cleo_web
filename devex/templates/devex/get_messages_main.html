@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     <tr>
-        
+        {% for message in message %}
         <td class="table-danger">
             <ul class="list-unstyled">
                 <li>{{ message.time_asserted }}</li>
@@ -52,6 +52,7 @@
             </ul>
         </td>
     </tr>
+    {% endfor %}
 </tbody>
 </table>
 </div>

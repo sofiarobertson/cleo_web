@@ -1,3 +1,4 @@
+{% load devex %}
 <div>
     <table class = "table table-sm table-bordered custom-table">
         <tr>
@@ -26,7 +27,7 @@
                         <td style="background-color: #FDB9C8;">{{projectId_value}}</td>
                     </tr>
                     <tr>
-                        <td class="bg-danger-subtle">{{start_value}}</td>
+                        <td class="bg-danger-subtle">{{start_value | seconds_to_hours }}</td>
                     </tr>
                     <tr>
                         <td>---</td>
@@ -61,7 +62,7 @@
                         <td class="bg-danger-subtle">{{length_value}}</td>
                     </tr>
                     <tr>
-                        <td style="background-color: #FDB9C8;">{{remain_value}}</td>
+                        <td style="background-color: #FDB9C8;">{{remain_value | seconds_to_hours }}</td>
                     </tr>
                 </table>
             </td>
