@@ -22,4 +22,6 @@ urlpatterns = [
     path("antenna/", views.antenna, name='antenna'),
     path("get-antenna-main/", views.get_antenna_main, name='get_antenna_main'),
     path("messages/", views.messages, name='messages'),
+    path("get-messages/", views.get_messages, name='get_messages'),
+    path("get-messages-main/", views.get_messages_main, name='get_messages_main'),
 ]

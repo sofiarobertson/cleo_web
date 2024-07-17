@@ -1,7 +1,16 @@
 {% extends "devex/base.html" %}
 {% block content %}
 {% load devex %}
-
-{{ messages }}
-
+    {% comment %} <h1>AstrID Script Executions</h1> {% endcomment %}
+    <fieldset class="h-100">
+        <div class="container-fluid vh-auto">
+            <h2 class="fw-bold">CLEO Messages Log</h2>
+            <ul class="list-unstyled"
+                        id="get-messages"
+                        hx-get="{% url 'devex:get_messages' %}"
+                        hx-trigger="every 1s">
+                        {% include "devex/get_messages.html" %}
+                    </ul>
+                </div>
+            </fieldset>
 {% endblock %}

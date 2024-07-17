@@ -63,7 +63,7 @@
                     </ul>
                     <h2 class="fw-bold">Recent History Log</h2>
                     <div class = "overflow-x-scroll">
-                        <table class = "table table-bordered table-striped">
+                        <table class = "table table-sm table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Time</th>
@@ -128,12 +128,17 @@
                                     frameborder="0"></iframe>
                         </div>
                         <div class="col-4">
-                            <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646088147&to=1720818888147&theme=light&panelId=5"
-                                    width="425"
-                                    height="175"
-                                    frameborder="0"></iframe>
+                           other important info? :0
                         </div>
-                        <div class="col-4"></div>
+                        <div class="col-4">some important info?</div>
+                        <div class="row">
+                            <h2 class="fw-bold">CLEO Messages</h2>
+                             <ul class="list-unstyled"
+                            id="get-messages-main"
+                            hx-get="{% url 'devex:get_messages_main' %}"
+                            hx-trigger="every 5s"> 
+                            {% include "devex/get_messages_main.html" %}
+                         </ul> 
                     </div>
                 </div>
                 <p>*http://grafana.gb.nrao.edu</p>
