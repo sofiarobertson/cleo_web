@@ -1,0 +1,57 @@
+<table class = "table table-sm table-bordered table-striped ">
+    <thead>
+        <tr>
+            <th class="text-danger">Asserted</th>
+            <th class="text-success">Cleared</th>
+            <th>Message</th>
+            <th>Device</th>
+            <th>Host</th>
+            <th>Level</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for message in messages %}
+    <tr>
+        
+        <td class="table-danger">
+            <ul class="list-unstyled">
+                <li>{{ message.time_asserted }}</li>
+            </ul>
+        </td>
+        <td class="table-success">
+            <ul class="list-unstyled">
+                <li> {{ message.time_cleared }}</li>
+               
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>{{ message.message}} </li>
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>{{ message.device }}</li>
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>{{ message.host }}</li>
+               
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>{{ message.level }}</li>
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>{{ message.type }}</li>
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>

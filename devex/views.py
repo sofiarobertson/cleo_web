@@ -462,6 +462,9 @@ def status(request: HttpRequest):
 # history log 
     # history = History.objects.order_by("datetime").last()
 
+#CLEO messages
+    message = McMessage.objects.last()
+
 
 # project info
     source = selected_manager_params.get("source")
@@ -610,6 +613,7 @@ def status(request: HttpRequest):
             "elerr_value":elerr_value,
             "aldif":aldif,
             "eldif":eldif,
+            "message": message,
 
 
 
@@ -623,8 +627,8 @@ def home(request):
             "devex/home.html")
 
 
-def messages(request: HttpRequest):
-    messages = McMessage.objects.first()
+def messages(request):
+    messages = McMessage.objects.order_by("-sort_time")[:10]
 
     return render(
                 request,
@@ -634,6 +638,27 @@ def messages(request: HttpRequest):
                 }
             )
 
+def get_messages(request):
+    messages = McMessage.objects.order_by("-sort_time")[:10]
+
+    return render(
+                request,
+                "devex/get_messages.html",
+                context={
+                    "messages": messages,
+                }
+            )
+
+def get_messages_main(request):
+    message = McMessage.objects.last()
+
+    return render(
+                request,
+                "devex/status.html",
+                context={
+                    "message": message,
+                }
+            )
 
 
 
