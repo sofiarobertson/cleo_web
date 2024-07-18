@@ -1,7 +1,7 @@
 {% for __, state in filtered_state.items %}
-    <li {% if state == "Activating" %}class="border-bottom bg-warning-subtle"{% endif %}
-        {% if state == "Running" %}class="border-bottom bg-success-subtle"{% endif %}
-        {% if state == "Committed" %}class="border-bottom bg-warning"{% endif %}
-        {% if state == "Stopping" %}class="border-bottom" style = "background-color: #ED9121;"{% endif %}
-        class="border-bottom">{{ state }}</li>
+    <li {% if state == "Activating" %}class="mb-1 border-bottom bg-warning-subtle"{% endif %}
+        {% if state == "Running" %}class="mb-1 border-bottom bg-success-subtle"{% endif %}
+        {% if state == "Committed" %}class="mb-1 border-bottom bg-warning"{% endif %}
+        {% if state == "Stopping" %}class="mb-1 border-bottom" style = "background-color: #ED9121;"{% endif %}
+        class="mb-1 border-bottom">{{ state }}</li>
 {% endfor %}

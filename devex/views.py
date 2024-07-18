@@ -824,6 +824,7 @@ def antenna(request:HttpRequest):
 
 
 def get_antenna_main(request:HttpRequest):
+
     cc = ChaliceClient(host=settings.CHALICE_HOST, port=settings.CHALICE_PORT)
 
     manager3 = "Antenna.AntennaManager"
