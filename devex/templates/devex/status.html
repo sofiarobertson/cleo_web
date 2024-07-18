@@ -54,7 +54,8 @@
                     </ul>
                 </div>
                 <div class="col-4">
-                    <h2 class="fw-bold">Antenna Info</h2>
+                    <a href="{% url 'devex:antenna' %}">
+                    <h2 class="fw-bold"><a href="{% url 'devex:antenna' %}">Antenna Info</a></h2>
                     <ul class="list-unstyled"
                         id="get-antenna"
                         hx-get="{% url 'devex:get_antenna' %}"
@@ -71,7 +72,7 @@
                                 frameborder="0"></iframe>
                     </div>
                     <div class="col-6">
-                        <h2 class="fw-bold">Recent History Log</h2>
+                        <h2 class="fw-bold"><a href="{% url 'devex:script' %}">Recent History Log</a></h2>
                         <div class = "overflow-x-scroll">
                             <table class = "table table-sm table-bordered table-striped">
                                 <thead>
@@ -131,7 +132,7 @@
                         </div>
                         
                         <div class="row">
-                            <h2 class="fw-bold">CLEO Messages</h2>
+                            <h2 class="fw-bold"><a href="{% url 'devex:messages' %}">CLEO Messages</a></h2>
                             <ul class="list-unstyled"
                                 id="get-messages-main"
                                 hx-get="{% url 'devex:get_messages_main' %}"

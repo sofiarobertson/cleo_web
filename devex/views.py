@@ -14,8 +14,8 @@ import matplotlib.ticker as ticker
 import pandas as pd
 from collections import namedtuple
 import math
-from io import StringIO, BytesIO
-import base64
+from io import BytesIO
+from matplotlib.animation import FuncAnimation
 
 
 
@@ -1052,3 +1052,4 @@ def get_antenna_main(request:HttpRequest):
 
         },
     )
+
