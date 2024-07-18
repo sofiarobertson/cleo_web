@@ -2,6 +2,7 @@
 {% block content %}
 {% load devex %}
 <div class="container vh-auto">
+    <h1 class="text-center">Antenna Monitor</h1>
     <div class="row h-100">
         <div class="col-6">
             <ul class="list-unstyled"
@@ -12,9 +13,9 @@
                     </ul>
     </div>
 <div class="col-6">
-    <h2 class="fw-bold text-center">Antenna Monitor </h2>
-    {% comment %} <div class="plot-container">
-    <img src="{% url 'devex:plot-view' %}" alt="Polar Plot"> {% endcomment %}
+    <div> 
+       {{ svg_image | safe }}
+    </div>
     </div>
     
 </div>

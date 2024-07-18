@@ -24,5 +24,6 @@ urlpatterns = [
     path("messages/", views.messages, name='messages'),
     path("get-messages/", views.get_messages, name='get_messages'),
     path("get-messages-main/", views.get_messages_main, name='get_messages_main'),
-    # path('plot/', views.plot_view, name='plot-view')
+    path("messages/", views.messages, name='messages'),
+
 ]
