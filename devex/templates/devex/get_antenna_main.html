@@ -1,162 +1,119 @@
+
 {% load devex %}
-<h2 class="fw-bold text-center">Encoder</h2>
-    <table class = "table table-bordered fixed-table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Azimuth</th>
-                <th>Elevation</th>
-            </tr>
-        </thead>
+
+<div class="container">
+    <table class="table table-bordered table-equal-columns">
+        <!-- Encoder -->
         <tr>
             <td>
-                <table>
-                    <tr >
-                        <td>Indicated:</td>
-                    </tr>
-                    <tr>
-                        <td>Commanded:</td>
-                    </tr>
-                    <tr>
-                        <td>Rate('/min):</td>
-                    </tr>
+                <h2 class="fw-bold text-center">Encoder</h2>
+                <table class="table table-bordered fixed-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Azimuth</th>
+                            <th>Elevation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Indicated:</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ azind_value | floatformat:5 }}</td>
+                            <td class="bg-primary-subtle">{{ elind_value | floatformat:5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Commanded:</td>
+                            <td class="bg-info-subtle overflow-hidden">{{ azcom_value | floatformat:5 }}</td>
+                            <td class="bg-info-subtle">{{ elcom_value | floatformat:5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Rate('/min):</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ azrate_value | floatformat:1 }}</td>
+                            <td class="bg-primary-subtle">{{ elrate_value | floatformat:1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Servo Err(\"):</td>
+                            <td class="bg-info-subtle overflow-hidden">{{ azerr_value | floatformat:5 }}</td>
+                            <td class="bg-info-subtle">{{ elerr_value | floatformat:5 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <img src='data:image/png;base64,{{ svg_image }}' width="250" height="250">
+            </td>
+        </tr>
 
-                    <tr>
-                        <td>Servo Err(\"):</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{azind_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle overflow-hidden">{{azcom_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{azrate_value | floatformat:1 }}</td>
-                    <tr>
-                        <td class="bg-info-subtle overflow-hidden">{{azerr_value | floatformat:5 }}</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle">{{elind_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle">{{elcom_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle">{{elrate_value | floatformat:1 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle">{{elerr_value | floatformat:5 }}</td>
-                    </tr>
-                </table>
-            </td>
-        </table>
-    <h2 class="fw-bold text-center">ICRS</h2>
-    <table class = "table table-bordered fixed-table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Right Ascension</th>
-                <th>Declination</th>
-            </tr>
-        </thead>
+        <!-- ICRS -->
         <tr>
             <td>
-                <table>
-                    <tr >
-                        <td>Indicated:</td>
-                    </tr>
-                    <tr>
-                        <td>Commanded:</td>
-                    </tr>
-                    <tr>
-                        <td>Rate('/min):</td>
-                    </tr>
-
-
+                <h2 class="fw-bold text-center">ICRS</h2>
+                <table class="table table-bordered fixed-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Right Ascension</th>
+                            <th>Declination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Indicated:</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ raind_value | degrees_to_ra }}</td>
+                            <td class="bg-primary-subtle">{{ dcind_value | degrees_to_dec }}</td>
+                        </tr>
+                        <tr>
+                            <td>Commanded:</td>
+                            <td class="bg-info-subtle overflow-hidden">{{ racom_value | degrees_to_ra }}</td>
+                            <td class="bg-info-subtle">{{ dccom_value | degrees_to_dec }}</td>
+                        </tr>
+                        <tr>
+                            <td>Rate('/min):</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ rarate_value | floatformat:1 }}</td>
+                            <td class="bg-primary-subtle">{{ dcrate_value | floatformat:1 }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{ raind_value | degrees_to_ra }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle overflow-hidden">{{ racom_value | degrees_to_ra }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{ rarate_value | floatformat:1 }}</td>
-                </table>
+                <img src='data:image/png;base64,{{ svg_image_J2000 }}' width="400" height="300">
             </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle">{{ dcind_value | degrees_to_dec }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle">{{dccom_value | degrees_to_dec }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle">{{dcrate_value | floatformat:1 }}</td>
-                    </tr>
-                </table>
-            </td>
-        </table>
-        <h2 class="fw-bold text-center">Galactic</h2>
-    <table class = "table table-bordered fixed-table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Longitude</th>
-                <th>Latitude</th>
-            </tr>
-        </thead>
+        </tr>
+
+        <!-- Galactic -->
         <tr>
             <td>
-                <table>
-                    <tr >
-                        <td>Indicated:</td>
-                    </tr>
-                    <tr>
-                        <td>Commanded:</td>
-                    </tr>
-                    <tr>
-                        <td>Rate('/min):</td>
-                    </tr>
-
-
+                <h2 class="fw-bold text-center">Galactic</h2>
+                <table class="table table-bordered fixed-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Longitude</th>
+                            <th>Latitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Indicated:</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ loind_value | floatformat:5 }}</td>
+                            <td class="bg-primary-subtle">{{ laind_value | floatformat:5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Commanded:</td>
+                            <td class="bg-info-subtle overflow-hidden">{{ locom_value | floatformat:5 }}</td>
+                            <td class="bg-info-subtle">{{ lacom_value | floatformat:5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Rate('/min):</td>
+                            <td class="bg-primary-subtle overflow-hidden">{{ lorate_value | floatformat:1 }}</td>
+                            <td class="bg-primary-subtle">{{ larate_value | floatformat:1 }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{ loind_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle overflow-hidden">{{ locom_value | floatformat:5  }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle overflow-hidden">{{ lorate_value | floatformat:1 }}</td>
-                </table>
+                <img src='data:image/png;base64,{{ svg_image_galactic }}' width="400" height="300">
             </td>
-            <td>
-                <table>
-                     <tr>
-                        <td class="bg-primary-subtle">{{ laind_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle">{{lacom_value | floatformat:5 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle">{{ larate_value | floatformat:1 }}</td>
-                    </tr> 
-                </table>
-            </td>
-        </table>
+        </tr>
+    </table>
+</div>

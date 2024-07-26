@@ -3,21 +3,11 @@
 {% load devex %}
 <div class="container vh-auto">
     <h1 class="text-center">Antenna Monitor</h1>
-    <div class="row h-100">
-        <div class="col-6">
             <ul class="list-unstyled"
                         id="get-antenna-main"
                         hx-get="{% url 'devex:get_antenna_main' %}"
                         hx-trigger="every 1s">
                         {% include "devex/get_antenna_main.html" %}
                     </ul>
-    </div>
-<div class="col-6">
-
-    <div> 
-       {{ svg_image | safe }}
-    </div>
-    </div>
-    
-</div>
+                </div>
 {% endblock %}

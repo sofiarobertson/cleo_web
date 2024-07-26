@@ -64,8 +64,8 @@
                     </ul>
                 </div>
                 <div class="row">
-                    <h2 class=" fw-bold">Weather*</h2>
                     <div class="col-6">
+                    <h2 class=" fw-bold">  <a href="http://grafana.gb.nrao.edu">Weather</a></h2>
                         <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3"
                                 width="425"
                                 height="175"
@@ -89,7 +89,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            {% comment %} <ul class="list-unstyled">
+                                           <ul class="list-unstyled">
                                                     <li>{{ history.datetime }}</li>
                                                 </ul>
                                             </td>
@@ -124,7 +124,7 @@
                                                     <ul class="list-unstyled">
                                                         <li>{{ history.obsprocedure.status }}</li>
                                                     </ul>
-                                            </td> {% endcomment %}
+                                            </td> 
                                         </tr>
                                     </tbody>
                                 </table>
@@ -141,7 +141,4 @@
                             </ul>
                         </div>
                     </div>
-                    <p>
-                        <a href="http://grafana.gb.nrao.edu">*Grafana</a>
-                    </p>
                 {% endblock %}

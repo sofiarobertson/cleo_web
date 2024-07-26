@@ -16,6 +16,12 @@ from collections import namedtuple
 import math
 from io import BytesIO
 from matplotlib.animation import FuncAnimation
+import astropy.coordinates as coord
+import astropy.units as u
+from astropy import units as u
+from astropy.coordinates import Angle
+import xml.etree.ElementTree as ET
+import io, base64
 
 
 
@@ -251,7 +257,7 @@ def get_state(request, manager):
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")
-    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+    subselect_state_value = dict(zip(range(35), subselect_state_value, strict=True))
     filtered_state = {key: value
                       for key, value in subselect_state_value.items() if value != "NotInService"}
 
@@ -265,11 +271,11 @@ def get_status(request, manager):
     subsystem_status = selected_manager_params.get("subsystemStatus")
     subselect_status = subsystem_status.get("subsystemStatus")
     subselect_status_value = subselect_status.get("value")
-    subselect_status_value = dict(zip(range(32), subselect_status_value, strict=True))
+    subselect_status_value = dict(zip(range(35), subselect_status_value, strict=True))
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")
-    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+    subselect_state_value = dict(zip(range(35), subselect_state_value, strict=True))
     filtered_state = {key: value
                       for key, value in subselect_state_value.items() if value != "NotInService"}
 
@@ -336,6 +342,12 @@ def get_antenna(request):
     elerr_error = elerr3.get("error")
     elerr_value = elerr_error.get("value")
 
+    color1 = 'b'
+    label1 = 'Indicated'
+    color2 = 'r'
+    label2 = 'Commanded'
+    svg_image = init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value, color2, label2)
+
     return render(
         request,
         "devex/get_antenna.html",
@@ -348,6 +360,7 @@ def get_antenna(request):
             "elcom_value":elcom_value,
             "elrate_value":elrate_value,
             "elerr_value":elerr_value,
+            "svg_image":svg_image,
         },
     )
 
@@ -435,16 +448,19 @@ def status(request: HttpRequest):
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")
-    subselect_state_value = dict(zip(range(32), subselect_state_value, strict=True))
+
+    try:
+        subselect_state_value = dict(zip(range(35), subselect_state_value))
+    except ValueError:
+        subselect_state_value = {}
+
     filtered_state = {key: value
-                      for key, value in subselect_state_value.items() if value != "NotInService"}
+                    for key, value in subselect_state_value.items() if value != "NotInService"}
 
     filtered_keys = set(filtered_state.keys())
 
-
     subsystem_device = selected_manager_params.get("subsystemSelect")
     subselect_device = subsystem_device.get("subsystemSelect")
-
 
     filtered_device = {
         key: value
@@ -452,11 +468,14 @@ def status(request: HttpRequest):
         if key not in ["name", "description", "type", "fitsname"] and value["value"]
     }
 
-
     subsystem_status = selected_manager_params.get("subsystemStatus")
     subselect_status = subsystem_status.get("subsystemStatus")
     subselect_status_value = subselect_status.get("value")
-    subselect_status_value = dict(zip(range(32), subselect_status_value, strict=True))
+
+    try:
+        subselect_status_value = dict(zip(range(35), subselect_status_value))
+    except ValueError:
+        subselect_status_value = {}
 
     filtered_status = {
         key: value
@@ -466,7 +485,7 @@ def status(request: HttpRequest):
 
 
 # history log 
-    # history = History.objects.order_by("datetime").last()
+    history = History.objects.order_by("datetime").last()
 
 #CLEO messages
     message = McMessage.objects.order_by("-sort_time")[:2]
@@ -580,6 +599,11 @@ def status(request: HttpRequest):
     eldif = elcom_value - elind_value
 
 
+    color1 = 'b'
+    label1 = 'Indicated'
+    color2 = 'r'
+    label2 = 'Commanded'
+    svg_image = init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value, color2, label2)
 
     return render(
         request,
@@ -597,7 +621,7 @@ def status(request: HttpRequest):
             "subselect_state_value": subselect_state_value,
             "filtered_state": filtered_state,
             "filtered_keys": filtered_keys,
-            # "history": history,
+            "history": history,
             "source_value":source_value,
             "projectId_value":projectId_value,
             "start_value":start_value,
@@ -620,6 +644,7 @@ def status(request: HttpRequest):
             "aldif":aldif,
             "eldif":eldif,
             "message": message,
+            "svg_image":svg_image,
 
 
 
@@ -701,25 +726,160 @@ def init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value
     plt.tight_layout()
     ax.legend(loc='upper left', bbox_to_anchor=(0, 1.1))
 
-    ax_table = fig.add_subplot()
-    ax_table.axis('off')
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+
+    # ax_table = fig.add_subplot()
+    # ax_table.axis('off')
+
+    # indicated_az = round(math.degrees(azind_value),5)
+    # commanded_az = round(math.degrees(azcom_value),5)
+    # indicated_el = round(elind_value * 90,5)
+    # commanded_el = round(elcom_value * 90,5)
 
     # table
-    data = {'': [label1, label2],
-            'Azimuth': [math.degrees(azind_value), math.degrees(azcom_value)],
-            'Elevation': [elind_value * 90, elcom_value * 90]}
-    df = pd.DataFrame(data)
-    table = ax_table.table(cellText=df.values, colLabels=df.columns, cellLoc='center')
-    table.auto_set_font_size(False)
-    table.set_fontsize(10)
-    table.scale(1, 1.5)
+    # data = {'': [label1, label2],
+    #         'Azimuth': [f"{indicated_az}°", f"{commanded_az}°"],
+    #         'Elevation': [f"{indicated_el}°", f"{commanded_el}°"] 
+    # }
+
+    # df = pd.DataFrame(data)
+    # table = ax_table.table(cellText=df.values, colLabels=df.columns, cellLoc='center')
+    # table.auto_set_font_size(False)
+    # table.set_fontsize(10)
+    # table.scale(1, 1.5)
     fig.tight_layout()
 
-    buf = BytesIO()
-    fig.savefig(buf, format='svg')
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
 
-    return buf.getvalue().decode()
+    # Encode the image to base64
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+
+
+def init_plot_J2000(raind_value, dcind_value, racom_value, dccom_value):
+    RA_indicated_deg = raind_value
+    RA_commanded_deg = racom_value
+
+    Dec_indicated_deg = dcind_value
+    Dec_commanded_deg = dccom_value
+    ra_indicated = Angle(RA_indicated_deg * u.degree)
+    ra_commanded = Angle(RA_commanded_deg * u.degree)
+
+    # ra_ind_hours = ra_indicated.to_string(unit=u.hour, precision=2, pad=True)
+    # ra_com_hours = ra_commanded.to_string(unit=u.hour, precision=2, pad=True)
+
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection="mollweide")
+
+    ax.scatter(ra_indicated.radian, Dec_indicated_deg * u.degree, marker='o', color='blue', label='Indicated')
+    ax.scatter(ra_commanded.radian, Dec_commanded_deg * u.degree, marker='x', color='red', label='Commanded')
+
+    ax.set_xticklabels(['10h', '8h', '6h', '4h', '2h', '0h', '22h', '20h','18h','16h','14h',])
+    ax.grid(True)
+    ax.legend(loc='upper right')
+    plt.title('ICRS Position', pad=15)
+    plt.xlabel('RA [hours]')
+    plt.ylabel('Dec [degrees]')
+
+
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+
+    # ax_table = fig.add_subplot()
+    # ax_table.axis('off')
+    # data = {
+    #     '': ['Indicated', 'Commanded'],
+    #     'RA': [ra_ind_hours, ra_com_hours],
+    #     'Dec': [f'{dcind_value:.2f}°', f'{dccom_value:.2f}°']
+    # }
+
+
+    # df = pd.DataFrame(data)
+
+    # table = ax_table.table(cellText=df.values, colLabels=df.columns, cellLoc='center')
+    # table.auto_set_font_size(False)
+    # table.set_fontsize(10)
+    # table.scale(1, 1.5) 
+
+    fig.tight_layout()
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight')
+    buf.seek(0)
+
+    # Encode the image to base64
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+
+
+def init_plot_galactic(loind_value, laind_value, lacom_value, locom_value):
+
+    LO_indicated_deg = loind_value
+    LO_commanded_deg = locom_value
+
+    LA_indicated_deg = laind_value
+    LA_commanded_deg = lacom_value
+
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection="mollweide")
+
+    ax.scatter(coord.Angle(LO_indicated_deg * u.degree).wrap_at(180*u.degree).radian,
+            coord.Angle(LA_indicated_deg * u.degree).radian,
+            marker='o', color='blue', label='Indicated')
+
+    ax.scatter(coord.Angle(LO_commanded_deg * u.degree).wrap_at(180*u.degree).radian,
+            coord.Angle(LA_commanded_deg * u.degree).radian,
+            marker='x', color='red', label='Commanded')
+
+    ax.grid(True)
+    ax.legend(loc='upper right')
+
+    plt.title('Galactic Position', pad=15)
+    plt.xlabel('Longitude [degrees]')
+    plt.ylabel('Latitude [degrees]')
+
+    ra_ticks = [210, 240, 270, 300, 330, 0, 30, 60, 90, 120, 150]
+    ra_ticks_wrapped = [tick if tick <= 180 else tick - 360 for tick in ra_ticks]
+    ra_labels = [f'{tick}°' for tick in ra_ticks]
+
+    ax.set_xticks([tick * u.degree.to(u.radian) for tick in ra_ticks_wrapped])
+    ax.set_xticklabels(ra_labels)
+
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+
+    #table
+    # ax_table = fig.add_subplot()
+    # ax_table.axis('off')
+
+    # data = {
+    #     '': ['Indicated', 'Commanded'],
+    #     'Longitude': [f'{LO_indicated_deg:.2f}°', f'{LO_commanded_deg:.2f}°'],
+    #     'Latitude': [f'{LA_indicated_deg:.2f}°', f'{LA_commanded_deg:.2f}°']
+    # }
+
+    # df = pd.DataFrame(data)
+
+    # table = ax_table.table(cellText=df.values, colLabels=df.columns, cellLoc='center')
+    # table.auto_set_font_size(False)
+    # table.set_fontsize(10)
+    # table.scale(1, 1.5)
+
+    fig.tight_layout()
+
+    # Save the figure to a BytesIO buffer as PNG
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight')
+    buf.seek(0)
+
+    # Encode the image to base64
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+
 
 
 
@@ -754,7 +914,7 @@ def antenna(request:HttpRequest):
     azerr_error = azerr3.get("error")
     azerr_value = azerr_error.get("value")
 
-#Elavation Values (indicated, commanded, rate, error)
+#Elevation Values (indicated, commanded, rate, error)
     elind = selected_manager_samplers.get("ccuData")
     elind2 = elind.get("ccuData")
     elind3 = elind2.get("ElEncoder")
@@ -855,12 +1015,15 @@ def antenna(request:HttpRequest):
     larate_rate = larate3.get("rate")
     larate_value = larate_rate.get("value")
 
-
     color1 = 'b'
     label1 = 'Indicated'
     color2 = 'r'
     label2 = 'Commanded'
     svg_image = init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value, color2, label2)
+
+    svg_image_J2000 = init_plot_J2000(raind_value, dcind_value, racom_value, dccom_value)
+
+    svg_image_galactic = init_plot_galactic(loind_value, laind_value, lacom_value, locom_value)
 
     return render(
         request,
@@ -887,6 +1050,8 @@ def antenna(request:HttpRequest):
             "lacom_value":lacom_value,
             "larate_value":larate_value,
             "svg_image":svg_image,
+            "svg_image_J2000":svg_image_J2000,
+            "svg_image_galactic":svg_image_galactic,
 
         },
     )
@@ -924,7 +1089,7 @@ def get_antenna_main(request:HttpRequest):
     azerr_error = azerr3.get("error")
     azerr_value = azerr_error.get("value")
 
-#Elavation Values (indicated, commanded, rate, error)
+#Elevation Values (indicated, commanded, rate, error)
     elind = selected_manager_samplers.get("ccuData")
     elind2 = elind.get("ccuData")
     elind3 = elind2.get("ElEncoder")
@@ -1025,6 +1190,18 @@ def get_antenna_main(request:HttpRequest):
     larate_rate = larate3.get("rate")
     larate_value = larate_rate.get("value")
 
+    color1 = 'b'
+    label1 = 'Indicated'
+    color2 = 'r'
+    label2 = 'Commanded'
+
+    svg_image = init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value, color2, label2)
+
+    svg_image_J2000 = init_plot_J2000(raind_value, dcind_value, racom_value, dccom_value)
+
+    svg_image_galactic = init_plot_galactic(loind_value, laind_value, lacom_value, locom_value)
+
+
     return render(
         request,
         "devex/get_antenna_main.html",
@@ -1049,6 +1226,9 @@ def get_antenna_main(request:HttpRequest):
             "laind_value":laind_value,
             "lacom_value":lacom_value,
             "larate_value":larate_value,
+            "svg_image":svg_image,
+            "svg_image_J2000":svg_image_J2000,
+            "svg_image_galactic":svg_image_galactic,
 
         },
     )

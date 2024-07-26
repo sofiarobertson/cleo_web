@@ -145,6 +145,19 @@
   z-index: 20;
 }
 
+.table-equal-columns td {
+  width: 50%;
+  vertical-align: top; 
+}
+
+.table-equal-columns td img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
         </style>
         <meta charset="utf-8">
         <title>Devex</title>
@@ -158,6 +171,7 @@
         <script src="https://unpkg.com/htmx.org@2.0.0"
                 integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
                 crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/pygments.css' %}">
     </head>
     <body>
         <div class="container">
