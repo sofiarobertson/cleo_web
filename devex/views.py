@@ -26,7 +26,7 @@ import io, base64
 
 
 def info(request):
-    histories = History.objects.order_by("-datetime")[:10]
+    histories = History.objects.order_by("-datetime")[:15]
 
     return render(
             request,
@@ -58,6 +58,26 @@ class HistoryDetailView2(generic.DetailView):
     template_name = "devex/history_detailstatus.html"
     context_object_name = "history"
 
+def get_script (request):
+    histories = History.objects.order_by("-datetime")[:15]
+
+    return render(
+            request,
+            "devex/get_script.html",
+            context={
+                "histories": histories,
+            }
+        )
+
+def get_script_status(request):
+    history = History.objects.order_by("datetime").last()
+    return render(
+            request,
+            "devex/get_script_status.html",
+            context={
+                "history": history,
+            },
+        )
 
 def get_available_managers(chalice_client: ChaliceClient):
     available_managers: list[str] = chalice_client.show_managers()

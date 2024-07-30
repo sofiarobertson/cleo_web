@@ -73,62 +73,12 @@
                     </div>
                     <div class="col-6">
                         <h2 class="fw-bold"><a href="{% url 'devex:script' %}">Recent History Log</a></h2>
-                        <div class = "overflow-x-scroll">
-                            <table class = "table table-sm table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Project Name</th>
-                                        <th>Script Name</th>
-                                        <th>Observer</th>
-                                        <th>Operator</th>
-                                        <th>Script State</th>
-                                        <th>Script Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                           <ul class="list-unstyled">
-                                                    <li>{{ history.datetime }}</li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled">
-                                                    <li>
-                                                        <a href = "{% url 'devex:history_detailstatus' history.id %}"> {{ history.obsprocedure.obsprojectref.name }}
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-unstyled">
-                                                        <li>{{ history.obsprocedure.name }}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-unstyled">
-                                                        <li>{{ history.obsprocedure.observer }}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-unstyled">
-                                                        <li>{{ history.obsprocedure.operator }}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-unstyled">
-                                                        <li>{{ history.obsprocedure.state }}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-unstyled">
-                                                        <li>{{ history.obsprocedure.status }}</li>
-                                                    </ul>
-                                            </td> 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <ul class="list-unstyled"
+                                id="get-messages-main"
+                                hx-get="{% url 'devex:get_script_status' %}"
+                                hx-trigger="every 5s">
+                                {% include "devex/get_script_status.html" %}
+                            </ul>
                         </div>
                         
                         <div class="row">
