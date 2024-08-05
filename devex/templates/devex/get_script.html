@@ -1,4 +1,5 @@
  {% comment %} <h1>AstrID Script Executions</h1> {% endcomment %}
+ <h5 class="text-danger"> Displays recently executed script information. Press the Project Name for Executed Script and Log.</h5>
 
         <table class = "table table-bordered table-striped ">
             <thead>
@@ -9,7 +10,6 @@
                     <th>Observer</th>
                     <th>Operator</th>
                     <th>Script State</th>
-                    <th>Script Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,24 +34,18 @@
                 </td>
                 <td>
                     <ul class="list-unstyled">
-                        <li>{{ history.obsprocedure.observer }}</li>
+                        <li>{{ history.observer }}</li>
                     </ul>
                 </td>
                 <td>
                     <ul class="list-unstyled">
-                        <li>{{ history.obsprocedure.operator }}</li>
+                        <li>{{ history.operator }}</li>
                        
                     </ul>
                 </td>
                 <td>
                     <ul class="list-unstyled">
-                        <li>{{ history.obsprocedure.state }}</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul class="list-unstyled">
-                        <li>{{ history.obsprocedure.status }}</li>
-                       
+                        <li>{{ history.executed_state }}</li>
                     </ul>
                 </td>
             </tr>

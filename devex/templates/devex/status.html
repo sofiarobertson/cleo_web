@@ -7,7 +7,8 @@
         <div class="container vh-auto">
             <div class="row h-100 ">
                 <div class="col-4">
-                    <h2 class="fw-bold">System Selection</h2>
+                    <h2 button type="button" class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="right" title="State and Status of selected device">
+                System Selection</h2>
                     <table class = "table table-bordered fixed-table">
                         <thead>
                             <tr>
@@ -54,25 +55,27 @@
                     </ul>
                 </div>
                 <div class="col-4">
-                    <a href="{% url 'devex:antenna' %}">
-                    <h2 class="fw-bold"><a href="{% url 'devex:antenna' %}">Antenna Info</a></h2>
+                    <h2 button type="button" class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="right" title="Click to go to Antenna Monitor Main Page">
+                        <a href="{% url 'devex:antenna' %}">Antenna Info</a></h2>
                     <ul class="list-unstyled"
                         id="get-antenna"
                         hx-get="{% url 'devex:get_antenna' %}"
-                        hx-trigger="every 1s">
+                        hx-trigger="every 100s">
                         {% include "devex/get_antenna.html" %}
                     </ul>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                    <h2 class=" fw-bold">  <a href="http://grafana.gb.nrao.edu">Weather</a></h2>
-                        <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1720646125684&to=1720818925684&theme=light&panelId=3"
-                                width="425"
-                                height="175"
-                                frameborder="0"></iframe>
+                    <div class="col-5">
+                        <h2 button type="button" class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="right" title="Click to go to GBT Monitoring (Grafana) ">
+                            <a href="http://grafana.gb.nrao.edu">Weather</a></h2>
+                    <iframe src="http://grafana.gb.nrao.edu/d-solo/MrbJCMIGz/weather?orgId=1&from=1722692863114&to=1722865663114&theme=light&panelId=3" 
+                        width="450" 
+                        height="200" 
+                        frameborder="0"></iframe>
                     </div>
-                    <div class="col-6">
-                        <h2 class="fw-bold"><a href="{% url 'devex:script' %}">Recent History Log</a></h2>
+                    <div class="col-7">
+                        <h2 button type="button" class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="right" title="Click to go to AstrID Script Executions Main Page">
+                            <a href="{% url 'devex:script' %}">Recent History Log</a></h2>
                         <ul class="list-unstyled"
                                 id="get-messages-main"
                                 hx-get="{% url 'devex:get_script_status' %}"
@@ -82,7 +85,8 @@
                         </div>
                         
                         <div class="row">
-                            <h2 class="fw-bold"><a href="{% url 'devex:messages' %}">CLEO Messages</a></h2>
+                            <h2 button type="button" class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="right" title="Click to go to CLEO Messages Main Page">
+                                <a href="{% url 'devex:messages' %}">CLEO Messages</a></h2>
                             <ul class="list-unstyled"
                                 id="get-messages-main"
                                 hx-get="{% url 'devex:get_messages_main' %}"

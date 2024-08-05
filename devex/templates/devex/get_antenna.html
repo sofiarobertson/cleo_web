@@ -1,11 +1,11 @@
 {% comment %} for the status page  {% endcomment %}
-<div>
+<div class="row">
+<div class = "col-7">
     <table class = "table table-sm table-bordered fixed-table">
         <thead>
             <tr>
                 <th></th>
                 <th>Azimuth</th>
-                <th>Elevation</th>
             </tr>
         </thead>
         <tr>
@@ -47,25 +47,59 @@
                     </tr>
                 </table>
             </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="bg-primary-subtle">{{elind_value | floatformat:3 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-info-subtle">{{elcom_value | floatformat:3 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="bg-primary-subtle">{{elrate_value | floatformat:3 }}</td>
-                    </tr>
-                    {% comment %} <tr>
-                        <td class="bg-info-subtle">{{ eldif | floatformat:3 }}</td>
-                    </tr> {% endcomment %}
-                    <tr>
-                        <td class="bg-info-subtle">{{elerr_value | floatformat:3 }}</td>
-                    </tr>
-                </table>
-            </td>
+        
         </table>
-        {% comment %} <img src='data:image/png;base64,{{ svg_image }}' width="200" height="200"> {% endcomment %}
-    </div>
+        <div>
+            <table class = "table table-sm table-bordered fixed-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Elevation</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <table>
+                            <tr >
+                                <td>Indicated:</td>
+                            </tr>
+                            <tr>
+                                <td>Commanded:</td>
+                            </tr>
+                            <tr>
+                                <td>Rate('/min):</td>
+                            </tr>
+                            {% comment %} <tr>
+                                <td>Difference:</td>
+                            </tr> {% endcomment %}
+                            <tr>
+                                <td>Servo Err(\"):</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="bg-primary-subtle">{{elind_value | floatformat:3 }}</td>
+                            </tr>
+                            <tr>
+                                <td class="bg-info-subtle">{{elcom_value | floatformat:3 }}</td>
+                            </tr>
+                            <tr>
+                                <td class="bg-primary-subtle">{{elrate_value | floatformat:3 }}</td>
+                            </tr>
+                            {% comment %} <tr>
+                                <td class="bg-info-subtle">{{ eldif | floatformat:3 }}</td>
+                            </tr> {% endcomment %}
+                            <tr>
+                                <td class="bg-info-subtle">{{elerr_value | floatformat:3 }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </table>
+            </div>
+        </div>
+            <div class="col-5">
+        <img src='data:image/png;base64,{{ svg_image }}' width="200" height="225">
+            </div>
+        </div>

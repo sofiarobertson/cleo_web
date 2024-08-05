@@ -10,6 +10,7 @@ from alda.atoll.models import Article, ArticleRef, ArticleType, AstridScript, Ex
 from alda.audit.models import FileHost, FileImportAttempt, FileImporter
 from alda.disk.models import DataProduct, DataProductType, DataTransfer, DataTransferGroup, FitsFile, FitsHeader, Manager, ManagerFolder, Problem, Project, Scan, ScanLog, ScanLogFile, ScanLogManagerFolder, ScanLogScan, SessionExport, SessionFile, SessionImport, SessionPart, SessionPartExport, SessionPartImport, Stats
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure 
 import matplotlib.ticker as ticker
 import pandas as pd
 from collections import namedtuple
@@ -753,10 +754,10 @@ def init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value
     elind_value = elind_value / 90
     elcom_value = elcom_value / 90
 
-    fig = plt.figure(figsize=(6, 8))
+    fig = Figure(figsize=(6, 8))
     ax = fig.add_subplot(polar=True)
-    ax.plot(azind_value, elind_value, marker='o', linestyle='None', color=color1, label=label1)
-    ax.plot(azcom_value, elcom_value, marker='x', linestyle='None', color=color2, label=label2)
+    ax.plot(azind_value, elind_value, marker='o', linestyle='None', color=color1, label=label1, markersize=10)
+    ax.plot(azcom_value, elcom_value, marker='x', linestyle='None', color=color2, label=label2, markersize=10)
     ax.xaxis.grid(True, color="grey", alpha=0.6)
     ax.yaxis.grid(True, color="grey", alpha=0.6)
     ax.set_rlabel_position(90 + 22.5)
@@ -766,10 +767,10 @@ def init_plot(azind_value, elind_value, color1, label1, azcom_value, elcom_value
     ax.grid(True)
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(format_y_axis))
     ax.set_title('Antenna Position', pad=15)
-    plt.tight_layout()
+    fig.tight_layout()
     ax.legend(loc='upper left', bbox_to_anchor=(0, 1.1))
 
-    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+    # Figure.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
 
     # ax_table = fig.add_subplot()
     # ax_table.axis('off')
@@ -815,21 +816,21 @@ def init_plot_J2000(raind_value, dcind_value, racom_value, dccom_value):
     # ra_ind_hours = ra_indicated.to_string(unit=u.hour, precision=2, pad=True)
     # ra_com_hours = ra_commanded.to_string(unit=u.hour, precision=2, pad=True)
 
-    fig = plt.figure(figsize=(10, 8))
+    fig = Figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection="mollweide")
 
-    ax.scatter(ra_indicated.radian, Dec_indicated_deg * u.degree, marker='o', color='blue', label='Indicated')
-    ax.scatter(ra_commanded.radian, Dec_commanded_deg * u.degree, marker='x', color='red', label='Commanded')
+    ax.scatter(ra_indicated.radian, Dec_indicated_deg * u.degree, marker='o', color='blue', label='Indicated', s=100)
+    ax.scatter(ra_commanded.radian, Dec_commanded_deg * u.degree, marker='x', color='red', label='Commanded', s=100)
 
     ax.set_xticklabels(['10h', '8h', '6h', '4h', '2h', '0h', '22h', '20h','18h','16h','14h',])
     ax.grid(True)
     ax.legend(loc='upper right')
-    plt.title('ICRS Position', pad=15)
-    plt.xlabel('RA [hours]')
-    plt.ylabel('Dec [degrees]')
+    ax.set_title('ICRS Position', pad=15)
+    ax.set_xlabel('RA [hours]')
+    ax.set_ylabel('Dec [degrees]')
 
 
-    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+    # ax.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
 
     # ax_table = fig.add_subplot()
     # ax_table.axis('off')
@@ -867,23 +868,23 @@ def init_plot_galactic(loind_value, laind_value, lacom_value, locom_value):
     LA_indicated_deg = laind_value
     LA_commanded_deg = lacom_value
 
-    fig = plt.figure(figsize=(10, 8))
+    fig = Figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection="mollweide")
 
     ax.scatter(coord.Angle(LO_indicated_deg * u.degree).wrap_at(180*u.degree).radian,
             coord.Angle(LA_indicated_deg * u.degree).radian,
-            marker='o', color='blue', label='Indicated')
+            marker='o', color='blue', label='Indicated', s=100)
 
     ax.scatter(coord.Angle(LO_commanded_deg * u.degree).wrap_at(180*u.degree).radian,
             coord.Angle(LA_commanded_deg * u.degree).radian,
-            marker='x', color='red', label='Commanded')
+            marker='x', color='red', label='Commanded', s=100)
 
     ax.grid(True)
     ax.legend(loc='upper right')
 
-    plt.title('Galactic Position', pad=15)
-    plt.xlabel('Longitude [degrees]')
-    plt.ylabel('Latitude [degrees]')
+    ax.set_title('Galactic Position', pad=15)
+    ax.set_xlabel('Longitude [degrees]')
+    ax.set_ylabel('Latitude [degrees]')
 
     ra_ticks = [210, 240, 270, 300, 330, 0, 30, 60, 90, 120, 150]
     ra_ticks_wrapped = [tick if tick <= 180 else tick - 360 for tick in ra_ticks]
@@ -892,7 +893,7 @@ def init_plot_galactic(loind_value, laind_value, lacom_value, locom_value):
     ax.set_xticks([tick * u.degree.to(u.radian) for tick in ra_ticks_wrapped])
     ax.set_xticklabels(ra_labels)
 
-    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+    # Figure.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
 
     #table
     # ax_table = fig.add_subplot()

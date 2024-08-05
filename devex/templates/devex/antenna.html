@@ -1,8 +1,8 @@
 {% extends "devex/base.html" %}
 {% block content %}
 {% load devex %}
-<div class="container vh-auto">
-    <h1 class="text-center">Antenna Monitor</h1>
+<div>
+    <h2 class="text-center fw-bold">Antenna Monitor</h2>
             <ul class="list-unstyled"
                         id="get-antenna-main"
                         hx-get="{% url 'devex:get_antenna_main' %}"
