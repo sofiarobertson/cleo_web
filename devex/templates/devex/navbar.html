@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg" style="background-color: #F4E3FF;">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'devex:home' %}">
@@ -29,8 +28,6 @@
                        role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">Misc.</a>
-                </li>
-                </ul>
                     <ul class="dropdown-menu">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'devex:messages' %}">CLEO Messages</a>
@@ -41,11 +38,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'devex:antenna' %}">Antenna Monitor</a>
                         </li>
-                    </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a class="nav-link" href="{% url 'devex:help' %}">Info</a></li>
-                          </ul>
-                   
-                </div>
-            </div>
-        </nav>
+                    </li>
+                </ul>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="nav-link" href="{% url 'devex:help' %}">Info</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
