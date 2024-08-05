@@ -2,5 +2,6 @@
     <li {% if status == "Error" %}class="mb-1 border-bottom" style = "background-color: #ED9121;"{% endif %}
         {% if status == "Warning" %}class="mb-1 border-bottom bg-warning"{% endif %}
         {% if status == "Fault" %}class="mb-1 border-bottom bg-danger"{% endif %}
+        {% if status == "Notice" %}class="mb-1 border-bottom" style = "background-color: #FFFF00;"{% endif %}
         class="mb-1 border-bottom">{{ status }}</li>
 {% endfor %}

@@ -277,11 +277,20 @@ def get_state(request, manager):
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")
-    subselect_state_value = dict(zip(range(35), subselect_state_value, strict=True))
+
+
+    try:
+        subselect_state_value = dict(zip(range(35), subselect_state_value))
+    except ValueError:
+        subselect_state_value = {}
+
     filtered_state = {key: value
-                      for key, value in subselect_state_value.items() if value != "NotInService"}
+                    for key, value in subselect_state_value.items() if value != "NotInService"}
+    
 
     return render(request, "devex/get_state.html", context={"filtered_state": filtered_state})
+
+    
 
 
 def get_status(request, manager):
@@ -291,21 +300,35 @@ def get_status(request, manager):
     subsystem_status = selected_manager_params.get("subsystemStatus")
     subselect_status = subsystem_status.get("subsystemStatus")
     subselect_status_value = subselect_status.get("value")
-    subselect_status_value = dict(zip(range(35), subselect_status_value, strict=True))
+
     subsystem_state = selected_manager_params.get("subsystemState")
     subselect_state = subsystem_state.get("subsystemState")
     subselect_state_value = subselect_state.get("value")
-    subselect_state_value = dict(zip(range(35), subselect_state_value, strict=True))
+
+
+    try:
+        subselect_state_value = dict(zip(range(35), subselect_state_value))
+    except ValueError:
+        subselect_state_value = {}
+
     filtered_state = {key: value
-                      for key, value in subselect_state_value.items() if value != "NotInService"}
+                    for key, value in subselect_state_value.items() if value != "NotInService"}
+    
 
     filtered_keys = set(filtered_state.keys())
+
+
+    try:
+        subselect_status_value = dict(zip(range(35), subselect_status_value))
+    except ValueError:
+        subselect_status_value = {}
 
     filtered_status = {
         key: value
         for key, value in subselect_status_value.items()
         if key in filtered_keys
     }
+
 
     return render(request, "devex/get_status.html", context={"filtered_status": filtered_status})
 

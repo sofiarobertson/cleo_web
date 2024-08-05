@@ -1,4 +1,23 @@
 {% load devex %}
+
+<div>
+    <table class = "table table-sm table-bordered custom-table">
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Project:</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="custom-table">
+                    <tr>
+                        <td style="background-color: #FDB9C8;">{{projectId_value}}</td>
+                    </tr>
+                </table>
+            </td>
+        </div>
 <div>
     <table class = "table table-sm table-bordered custom-table">
         <tr>
@@ -6,9 +25,6 @@
                 <table>
                     <tr>
                         <td>Source:</td>
-                    </tr>
-                    <tr>
-                        <td>Project:</td>
                     </tr>
                     <tr>
                         <td>Start:</td>
@@ -23,14 +39,12 @@
                     <tr>
                         <td class="bg-danger-subtle">{{source_value}}</td>
                     </tr>
+
                     <tr>
-                        <td style="background-color: #FDB9C8;">{{projectId_value}}</td>
+                        <td style="background-color: #FDB9C8;">{{start_value | seconds_to_hours }}</td>
                     </tr>
                     <tr>
-                        <td class="bg-danger-subtle">{{start_value | seconds_to_hours }}</td>
-                    </tr>
-                    <tr>
-                        <td>---</td>
+                        <td> ---</td>
                     </tr>
                 </table>
             </td>
@@ -45,9 +59,6 @@
                     <tr>
                         <td>Length:</td>
                     </tr>
-                    <tr>
-                        <td>Remaining:</td>
-                    </tr>
                 </table>
             </td>
             <td>
@@ -61,16 +72,30 @@
                     <tr>
                         <td class="bg-danger-subtle">{{length_value}}</td>
                     </tr>
-                    <tr>
-                        <td style="background-color: #FDB9C8;">{{remain_value | seconds_to_hours }}</td>
-                    </tr>
                 </table>
             </td>
         </tr>
     </table>
 </div>
-<div>
-    <table class = "table table-sm table-bordered custom-table">
+
+        <div>
+            <table class = "table table-sm table-bordered custom-table">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>Remaining:</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="custom-table">
+                            <tr>
+                                <td style="background-color: #FDB9C8;">{{remain_value | seconds_to_hours }}</td>
+                            </tr>
+                        </table>
+                    </td>
+    {% comment %} <table class = "table table-sm table-bordered custom-table">
         <tr>
             <td>
                 <table class="custom-table">
@@ -126,8 +151,8 @@
                 </table>
             </td>
         </tr>
-    </table>
-</div>
+    </table> {% endcomment %}
+</div> 
 <div>
     <table class = "table table-sm table-bordered custom-table">
         <tr>

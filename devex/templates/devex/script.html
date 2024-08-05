@@ -1,8 +1,6 @@
 {% extends "devex/base.html" %}
 {% block content %}
 {% load devex %}
-<fieldset class="h-100">
-    <div class="container-fluid vh-auto">
         <h2 class="fw-bold">History Log</h2>
         <ul class="list-unstyled"
         id="get-script"
@@ -10,6 +8,4 @@
         hx-trigger="every 5s">
         {% include "devex/get_script.html" %}
     </ul>
-    </div>
-</fieldset>
 {% endblock %}

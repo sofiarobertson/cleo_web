@@ -84,7 +84,7 @@
       .sticky-top {
         position: sticky;
         background-color: white;
-        z-index: 2;
+        z-index: 0;
 
       }
 
@@ -115,7 +115,7 @@
   
     .fixed-table td {
       width: 33.33%; 
-      white-space: nowrap; 
+
       overflow: scroll;
 
   }
@@ -123,23 +123,21 @@
   .custom-table {
     table-layout: fixed; 
     width: 100%; 
+    overflow: scroll;
 }
 
   .custom-table td {
     width: 25%;
     padding: 2px; 
+    overflow: scroll;
 }
 
   .custom-table td > table {
     width: 100%; 
     table-layout: fixed; 
+    overflow: scroll;
 }
 
-  .custom-table td > table td {
-    white-space: nowrap; 
-    overflow: scroll;
-    text-overflow: ellipsis; 
-}
 .dropdown-menu {
   position: absolute;
   z-index: 20;
