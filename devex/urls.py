@@ -27,5 +27,6 @@ urlpatterns = [
     path("messages/", views.messages, name='messages'),
     path("get-script/", views.get_script, name='get_script'),
     path("get-script-status/", views.get_script_status, name='get_script_status'),
+    path("help/", views.help, name='help'),
 
 ]

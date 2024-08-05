@@ -2,7 +2,9 @@
 {% block content %}
     {% load static %}
     <h1 class="text-center">Consolidated Hub for GBO Information and Parameters (CHIP)</h1>
-    <img src="{% static "chip.jpg" %}"  width="50" height="150"class="center">
+    <h5 class="text-center">For additional details about the sources of information on CHIP Web or how to navigate it, please visit:
+        <a class="btn btn-success" href="{% url 'devex:help' %}" role="button">Info</a></h5>
+    <img src="{% static "chip.jpg" %}"  width="70" height="170"class="center">
     <ul class = "wrapper list-unstyled">
         <li class="p-3">
             <a class="btn btn-success" href="{% url 'devex:devex' %}" role="button">Device Explorer</a>
@@ -24,4 +26,5 @@
                role="button">CLEO Messages</a>
         </li>
     </ul>
+
 {% endblock %}

@@ -26,6 +26,13 @@ import io, base64
 
 
 
+def help(request):
+    return render(
+            request,
+            "devex/help.html"
+        )
+
+
 def info(request):
     histories = History.objects.order_by("-datetime")[:15]
 
