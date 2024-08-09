@@ -10,10 +10,13 @@ requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
-    "django",
+    "django<4.2",
     "django_environ",
     "zmqgc>=22.1",
     "data_pub>=22.1",
+    "astropy",
+    "matplotlib",
+    "pandas",
 ]
 
 packages = ["cleo_web", "devex"]
