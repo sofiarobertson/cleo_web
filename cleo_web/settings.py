@@ -18,7 +18,8 @@ env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
     INTERNAL_IPS=(list, []),
-    YGOR_TELESCOPE=(str, "/home/gbt")
+    YGOR_TELESCOPE=(str, "/home/gbt"),
+    CACHE_MIDDLEWARE_SECONDS=(int, 60),
 )
 environ.Env.read_env(env.str("ENV_PATH", "cleo_web/.env"))
 
@@ -171,5 +172,5 @@ CACHES = {
         },
     },
 }
-CACHE_MIDDLEWARE_SECONDS = 60
+CACHE_MIDDLEWARE_SECONDS = env("CACHE_MIDDLEWARE_SECONDS")
 KEY_PREFIX="chip"

@@ -17,6 +17,7 @@ dependencies = [
     "astropy",
     "matplotlib",
     "pandas",
+    "pylibmc",
 ]
 
 packages = ["cleo_web", "devex"]
