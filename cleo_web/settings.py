@@ -36,6 +36,7 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 INTERNAL_IPS = env("INTERNAL_IPS")
+STATIC_ROOT = env("STATIC_ROOT")
 
 # Application definition
 
@@ -57,12 +58,15 @@ INSTALLED_APPS = [
     "devex",
 ]
 
-STATIC_URL = "static/"
+STATIC_URL = env("STATIC_URL")
+FORCE_SCRIPT_NAME = env("FORCE_SCRIPT_NAME")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -148,11 +152,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SHOW_TOOLBAR_CALLBACK = lambda request: True
+
+
+CACHES = {
+    "default": {
+        **env.cache(),
+        "OPTIONS": {
+            "binary": True,
+            "behaviors": {
+                "ketama": True,
+            },
+        },
+    },
+}
+CACHE_MIDDLEWARE_SECONDS = 60
+KEY_PREFIX="chip"
